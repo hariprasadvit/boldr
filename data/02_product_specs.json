@@ -1,0 +1,96 @@
+{
+  "models": [
+    {
+      "sku": "BLD-EXP-TI-40",
+      "name": "Expedition Titanium",
+      "price_sgd": 485,
+      "case_diameter_mm": 40,
+      "case_thickness_mm": 11.5,
+      "case_material": "Grade 5 Titanium (Ti-6Al-4V)",
+      "crystal": "Sapphire with anti-reflective coating",
+      "movement": "Miyota 9015 automatic",
+      "power_reserve_hr": 42,
+      "accuracy_sec_per_day": "+/-10",
+      "water_resistance_m": 100,
+      "lume": "Super-LumiNova C3",
+      "lume_compliance": "ISO 3157, non-radioactive",
+      "weight_g_no_strap": 68,
+      "dial_colours": ["Slate Grey", "Forest Green", "Midnight Blue", "Sandstone"],
+      "included_strap": "STR-FKM-20-BLK",
+      "compatible_straps": ["FKM rubber", "Nylon NATO", "Titanium bracelet", "Leather"],
+      "lug_width_mm": 20,
+      "safety": {
+        "bpa_free_strap": true,
+        "nickel_free": true,
+        "hypoallergenic": true,
+        "eu_reach_compliant": true,
+        "rohs_compliant": true
+      },
+      "warranty_years": 2,
+      "availability": "in_stock"
+    },
+    {
+      "sku": "BLD-JRN-TI-38",
+      "name": "Journey Titanium",
+      "price_sgd": 395,
+      "case_diameter_mm": 38,
+      "case_thickness_mm": 10.8,
+      "case_material": "Grade 2 Titanium (commercially pure)",
+      "crystal": "Sapphire with anti-reflective coating",
+      "movement": "Miyota 6T33 automatic",
+      "power_reserve_hr": 40,
+      "accuracy_sec_per_day": "+/-15",
+      "water_resistance_m": 50,
+      "lume": "Super-LumiNova BGW9",
+      "lume_compliance": "ISO 3157, non-radioactive",
+      "weight_g_no_strap": 58,
+      "dial_colours": ["Ivory White", "Charcoal", "Terracotta", "Ocean Blue"],
+      "included_strap": "STR-NATO-20-OLV",
+      "compatible_straps": ["Nylon NATO", "FKM rubber", "Leather", "Mesh bracelet"],
+      "lug_width_mm": 20,
+      "safety": {
+        "bpa_free_strap": true,
+        "nickel_free": true,
+        "hypoallergenic": true,
+        "eu_reach_compliant": true,
+        "rohs_compliant": true
+      },
+      "warranty_years": 2,
+      "availability": "in_stock"
+    },
+    {
+      "sku": "BLD-EXP-TI-40-LE",
+      "name": "Expedition Titanium - Ember Limited Edition",
+      "price_sgd": 595,
+      "case_diameter_mm": 40,
+      "case_material": "Grade 5 Titanium with PVD bronze coating",
+      "movement": "Miyota 9015 automatic",
+      "power_reserve_hr": 42,
+      "dial_colours": ["Burnt Orange"],
+      "included_strap": "Leather (cognac)",
+      "lug_width_mm": 20,
+      "safety": {
+        "bpa_free_strap": true,
+        "nickel_free": true,
+        "hypoallergenic": false,
+        "hypoallergenic_note": "leather strap",
+        "eu_reach_compliant": true
+      },
+      "availability": "sold_out",
+      "waitlist_url": "boldr.co/waitlist"
+    }
+  ],
+  "straps": [
+    {"sku": "STR-FKM-20-BLK", "type": "FKM Rubber", "colour": "Black", "bpa_free": true, "price_sgd": 35, "compatible_with": "All models"},
+    {"sku": "STR-FKM-20-NVY", "type": "FKM Rubber", "colour": "Navy", "bpa_free": true, "price_sgd": 35, "compatible_with": "All models"},
+    {"sku": "STR-FKM-20-OLV", "type": "FKM Rubber", "colour": "Olive", "bpa_free": true, "price_sgd": 35, "compatible_with": "All models"},
+    {"sku": "STR-FKM-20-RED", "type": "FKM Rubber", "colour": "Red", "bpa_free": true, "price_sgd": 35, "compatible_with": "All models"},
+    {"sku": "STR-NATO-20-OLV", "type": "Nylon NATO", "colour": "Olive", "bpa_free": true, "price_sgd": 25, "compatible_with": "All models"},
+    {"sku": "STR-NATO-20-BLK", "type": "Nylon NATO", "colour": "Black", "bpa_free": true, "price_sgd": 25, "compatible_with": "All models"},
+    {"sku": "STR-NATO-20-TAN", "type": "Nylon NATO", "colour": "Tan", "bpa_free": true, "price_sgd": 25, "compatible_with": "All models"},
+    {"sku": "STR-LTH-20-BRN", "type": "Leather", "colour": "Brown", "bpa_free": true, "price_sgd": 55, "compatible_with": "All models"},
+    {"sku": "STR-LTH-20-BLK", "type": "Leather", "colour": "Black", "bpa_free": true, "price_sgd": 55, "compatible_with": "All models"},
+    {"sku": "STR-MESH-20-SLV", "type": "Mesh Bracelet", "colour": "Silver", "bpa_free": true, "price_sgd": 75, "compatible_with": "Journey only"},
+    {"sku": "STR-TI-20", "type": "Titanium Bracelet", "colour": "Titanium", "bpa_free": true, "price_sgd": 145, "compatible_with": "Expedition only"}
+  ]
+}

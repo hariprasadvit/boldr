@@ -1,0 +1,129 @@
+{
+  "version": "1.0",
+  "rules": [
+    {
+      "id": "R001",
+      "trigger": "question_type == 'order_status'",
+      "branch": "requires_shopify_lookup",
+      "auto_reply_allowed": false,
+      "escalate": false,
+      "note": "Per SOP: always check Shopify before replying"
+    },
+    {
+      "id": "R002",
+      "trigger": "message contains 'chargeback' OR 'angry' OR 'lawyer' OR 'refund' AND days_since_request > 10",
+      "branch": "escalate_immediately",
+      "auto_reply_allowed": false,
+      "escalate": true,
+      "note": "Hard escalation triggers"
+    },
+    {
+      "id": "R003",
+      "trigger": "question_type == 'materials_safety' AND persona == 'health_conscious'",
+      "branch": "high_liability",
+      "auto_reply_allowed": false,
+      "escalate": false,
+      "note": "Safety claims to health-conscious buyers should always be human-reviewed"
+    },
+    {
+      "id": "R004",
+      "trigger": "bulk_order_qty > 5",
+      "branch": "corporate_sales",
+      "auto_reply_allowed": false,
+      "escalate": true,
+      "redirect_to": "corporate@boldr.co"
+    },
+    {
+      "id": "R005",
+      "trigger": "kb_confidence >= 0.75 AND no_escalation_flags",
+      "branch": "auto_reply_eligible",
+      "auto_reply_allowed": true,
+      "escalate": false
+    },
+    {
+      "id": "R006",
+      "trigger": "kb_confidence < 0.5",
+      "branch": "knowledge_gap",
+      "auto_reply_allowed": false,
+      "escalate": false,
+      "note": "Flag for new questions log"
+    },
+    {
+      "id": "R007",
+      "trigger": "question_type == 'engraving' AND message contains ('change' OR 'wrong' OR 'mistake') AND minutes_since_order < 60",
+      "branch": "free_engraving_correction",
+      "auto_reply_allowed": true,
+      "escalate": false
+    },
+    {
+      "id": "R008",
+      "trigger": "question_type == 'engraving' AND message contains 'Arabic'",
+      "branch": "specialty_script",
+      "auto_reply_allowed": true,
+      "escalate": false,
+      "note": "Now in FAQ - confirm script supported"
+    },
+    {
+      "id": "R009",
+      "trigger": "question_type == 'servicing' AND message contains ('older' OR '2019' OR '2020' OR 'discontinued')",
+      "branch": "older_model_check",
+      "auto_reply_allowed": false,
+      "escalate": false,
+      "note": "Parts availability needs team check"
+    },
+    {
+      "id": "R010",
+      "trigger": "message contains 'wrong item' OR 'wrong colour' OR 'wrong size'",
+      "branch": "fulfilment_error",
+      "auto_reply_allowed": false,
+      "escalate": true,
+      "note": "Always human - request photo, flag to team"
+    },
+    {
+      "id": "R011",
+      "trigger": "question_type == 'product_general' AND message contains ('press' OR 'media' OR 'influencer' OR 'collab')",
+      "branch": "marketing_redirect",
+      "auto_reply_allowed": false,
+      "escalate": true,
+      "redirect_to": "marketing@boldr.co"
+    },
+    {
+      "id": "R012",
+      "trigger": "order_id_in_field != order_id_in_message_body",
+      "branch": "data_inconsistency",
+      "auto_reply_allowed": false,
+      "escalate": false,
+      "note": "Flag for human - which order ID is correct?"
+    },
+    {
+      "id": "R013",
+      "trigger": "channel == 'whatsapp' OR channel == 'instagram_dm'",
+      "branch": "informal_channel",
+      "auto_reply_allowed": true,
+      "escalate": false,
+      "note": "Allow shorter, more casual replies"
+    },
+    {
+      "id": "R014",
+      "trigger": "persona == 'transactional' AND question_type == 'order_status'",
+      "branch": "shopify_lookup_required",
+      "auto_reply_allowed": false,
+      "escalate": false
+    },
+    {
+      "id": "R015",
+      "trigger": "question contains 'limited edition' OR 'Ember'",
+      "branch": "limited_edition_inquiry",
+      "auto_reply_allowed": true,
+      "escalate": false,
+      "note": "Direct to waitlist - do not promise restock"
+    },
+    {
+      "id": "R016",
+      "trigger": "DEFAULT",
+      "branch": "standard_kb_path",
+      "auto_reply_allowed": true,
+      "escalate": false
+    }
+  ]
+}

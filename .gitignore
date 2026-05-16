@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+kb/chroma_db/
+outputs/*.csv
+outputs/*.json
+outputs/*.md
+outputs/kb_drafts/*
+!outputs/.gitkeep
