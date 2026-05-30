@@ -18,11 +18,22 @@ DEFAULT_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-5")
 
 @lru_cache(maxsize=1)
 def client() -> Anthropic:
-    if not os.getenv("ANTHROPIC_API_KEY"):
+    # Supports native Anthropic (x-api-key) OR an Anthropic-compatible proxy
+    # like OpenRouter (Authorization: Bearer). Set ANTHROPIC_BASE_URL +
+    # ANTHROPIC_AUTH_TOKEN to route through OpenRouter.
+    base_url = os.getenv("ANTHROPIC_BASE_URL")
+    auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not (auth_token or api_key):
         raise RuntimeError(
-            "ANTHROPIC_API_KEY not set. Copy .env.example to .env and add your key."
+            "Set ANTHROPIC_API_KEY (native Anthropic) or ANTHROPIC_AUTH_TOKEN "
+            "with ANTHROPIC_BASE_URL (OpenRouter). Copy .env.example to .env."
         )
-    return Anthropic()
+    return Anthropic(
+        api_key=api_key or None,
+        auth_token=auth_token or None,
+        base_url=base_url or None,
+    )
 
 
 @lru_cache(maxsize=16)
