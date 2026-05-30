@@ -1,0 +1,255 @@
+[
+  {
+    "theme": "engraving_options",
+    "internal_ticket_count": 15,
+    "internal_sample_ids": [
+      "TKT-1047",
+      "TKT-1033",
+      "TKT-1049",
+      "TKT-1015",
+      "TKT-1022"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "positive": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "Engraving turnaround time is the make-or-break for gift purchases. Some brands take 4 weeks which kills the gift use case."
+    ],
+    "external_relevance_notes": [
+      "Boldr's 2-3 day standard + same-day rush is very competitive. Should be louder about this in gifting season."
+    ]
+  },
+  {
+    "theme": "titanium_grade_5_vs_2",
+    "internal_ticket_count": 10,
+    "internal_sample_ids": [
+      "TKT-1021",
+      "TKT-1060",
+      "TKT-1022",
+      "TKT-1052",
+      "TKT-1038"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "neutral": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "Grade 5 vs Grade 2 titanium debate again. Most people can't tell the difference in daily wear but Grade 5 holds finish better over years."
+    ],
+    "external_relevance_notes": [
+      "Validates Boldr's positioning of Expedition (Grade 5) vs Journey (Grade 2) as a real differentiator collectors care about."
+    ]
+  },
+  {
+    "theme": "strap_quick_release",
+    "internal_ticket_count": 10,
+    "internal_sample_ids": [
+      "TKT-1035",
+      "TKT-1006",
+      "TKT-1011",
+      "TKT-1001",
+      "TKT-1029"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "positive": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "Quick-release spring bars should be standard in 2026. Still surprised when brands don't include them."
+    ],
+    "external_relevance_notes": [
+      "Boldr already has this. Easy win to highlight in product copy and ads."
+    ]
+  },
+  {
+    "theme": "after_sales_service",
+    "internal_ticket_count": 10,
+    "internal_sample_ids": [
+      "TKT-1010",
+      "TKT-1006",
+      "TKT-1005",
+      "TKT-1001",
+      "TKT-1004"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "positive": 1
+    },
+    "external_signal_strength": "medium",
+    "external_sample_quotes": [
+      "Sent my Boldr in for service - clear pricing, reasonable turnaround. Better than my experience with bigger brands."
+    ],
+    "external_relevance_notes": [
+      "Direct positive signal. Service is a strength to lean into."
+    ]
+  },
+  {
+    "theme": "water_resistance_real_world",
+    "internal_ticket_count": 9,
+    "internal_sample_ids": [
+      "TKT-1010",
+      "TKT-1035",
+      "TKT-1006",
+      "TKT-1004",
+      "TKT-1045"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "negative": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "100m water resistance ratings are misleading. ISO 22810 means it survives static pressure not actual swimming. Brands need to be clearer."
+    ],
+    "external_relevance_notes": [
+      "Boldr correctly states 'safe for swimming, not diving' for Expedition - more honest than competitors. Worth amplifying."
+    ]
+  },
+  {
+    "theme": "bpa_free_straps",
+    "internal_ticket_count": 7,
+    "internal_sample_ids": [
+      "TKT-1016",
+      "TKT-1051",
+      "TKT-1044",
+      "TKT-1048",
+      "TKT-1038"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "positive": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "Honestly more brands need to call out BPA-free FKM. I got a rash from a no-name silicone strap last year and now I check every spec sheet."
+    ],
+    "external_relevance_notes": [
+      "Direct - validates BPA-free as marketing angle. Boldr is one of few micro-brands that explicitly markets this."
+    ]
+  },
+  {
+    "theme": "nickel_allergy_straps",
+    "internal_ticket_count": 6,
+    "internal_sample_ids": [
+      "TKT-1051",
+      "TKT-1032",
+      "TKT-1067",
+      "TKT-1039",
+      "TKT-1003"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "negative": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "Why is it so hard to find a watch where every strap option is nickel-free? Even brands that say hypoallergenic still use buckles with nickel."
+    ],
+    "external_relevance_notes": [
+      "Strong gap in market. Boldr's nickel-free FKM and titanium buckles are a real differentiator but not surfaced on product pages."
+    ]
+  },
+  {
+    "theme": "sustainability_carbon",
+    "internal_ticket_count": 4,
+    "internal_sample_ids": [
+      "TKT-1024",
+      "TKT-1028",
+      "TKT-1036",
+      "TKT-1013"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "neutral": 1
+    },
+    "external_signal_strength": "medium",
+    "external_sample_quotes": [
+      "Watch industry sustainability is mostly greenwashing. Real signals are: take-back programmes, carbon offset shipping, recycled packaging."
+    ],
+    "external_relevance_notes": [
+      "Niche but vocal segment. Boldr could differentiate with concrete sustainability commitments rather than vague claims."
+    ]
+  },
+  {
+    "theme": "shipping_customs",
+    "internal_ticket_count": 4,
+    "internal_sample_ids": [
+      "TKT-1046",
+      "TKT-1005",
+      "TKT-1040",
+      "TKT-1059"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "negative": 1
+    },
+    "external_signal_strength": "high",
+    "external_sample_quotes": [
+      "Got hit with unexpected customs duties on import. Not the brand's fault but the warning at checkout was easy to miss."
+    ],
+    "external_relevance_notes": [
+      "Friction point. Make customs language unmissable at checkout."
+    ]
+  },
+  {
+    "theme": "corporate_bulk_orders",
+    "internal_ticket_count": 3,
+    "internal_sample_ids": [
+      "TKT-1068",
+      "TKT-1014",
+      "TKT-1019"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "neutral": 1
+    },
+    "external_signal_strength": "medium",
+    "external_sample_quotes": [
+      "Trying to find a watch brand that does corporate gifting under 1k SGD per unit. Most are either premium luxury or generic Chinese brands."
+    ],
+    "external_relevance_notes": [
+      "Gap in market for premium-but-accessible micro-brands. Boldr's Journey at SGD 395 hits the sweet spot."
+    ]
+  },
+  {
+    "theme": "limited_edition_availability",
+    "internal_ticket_count": 2,
+    "internal_sample_ids": [
+      "TKT-1030",
+      "TKT-1014"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "negative": 1
+    },
+    "external_signal_strength": "medium",
+    "external_sample_quotes": [
+      "Tried to buy the Ember edition - sold out within hours and waitlist hasn't moved in months."
+    ],
+    "external_relevance_notes": [
+      "Demand validation but customer experience risk. Set waitlist expectations clearly."
+    ]
+  },
+  {
+    "theme": "vegan_strap_options",
+    "internal_ticket_count": 1,
+    "internal_sample_ids": [
+      "TKT-1036"
+    ],
+    "external_mention_count": 1,
+    "external_sentiment": {
+      "positive": 1
+    },
+    "external_signal_strength": "medium",
+    "external_sample_quotes": [
+      "Looking for vegan straps that aren't just rebranded plastic. Most brands don't even acknowledge this is a question."
+    ],
+    "external_relevance_notes": [
+      "Emerging segment. Boldr has FKM + nylon NATO that qualify but doesn't market as vegan."
+    ]
+  }
+]

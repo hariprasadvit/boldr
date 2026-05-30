@@ -105,7 +105,7 @@
     },
     {
       "id": "R014",
-      "trigger": "persona == 'transactional' AND question_type == 'order_status'",
+      "trigger": "question_type == 'order_status'",
       "branch": "shopify_lookup_required",
       "auto_reply_allowed": false,
       "escalate": false

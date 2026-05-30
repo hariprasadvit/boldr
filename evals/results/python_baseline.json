@@ -1,0 +1,45 @@
+{
+  "pipeline": "python_chromadb",
+  "n": 70,
+  "metrics": {
+    "qtype_accuracy": 0.843,
+    "persona_accuracy": 0.8,
+    "route_match_rate": 0.486,
+    "kb_recall_when_answerable": 0.88,
+    "order_id_mismatch_detected": "4/4",
+    "sop_price_drift_violations": 0
+  },
+  "qtype_confusion": {
+    "knowledge_gap": {
+      "knowledge_gap": 6,
+      "materials_safety": 2,
+      "product_general": 1,
+      "engraving": 1
+    },
+    "servicing": {
+      "servicing": 10
+    },
+    "product_general": {
+      "product_general": 8,
+      "knowledge_gap": 1,
+      "engraving": 1
+    },
+    "materials_safety": {
+      "materials_safety": 8,
+      "product_general": 1,
+      "strap_compatibility": 1
+    },
+    "strap_compatibility": {
+      "strap_compatibility": 9,
+      "materials_safety": 1
+    },
+    "order_status": {
+      "product_general": 1,
+      "order_status": 8,
+      "knowledge_gap": 1
+    },
+    "engraving": {
+      "engraving": 10
+    }
+  }
+}

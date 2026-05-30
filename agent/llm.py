@@ -1,4 +1,9 @@
-"""Thin wrapper around the Anthropic SDK shared by all nodes."""
+"""Thin wrapper around OpenRouter (OpenAI-compatible) shared by all nodes.
+
+OpenRouter proxies the request to the underlying provider — for
+`anthropic/claude-sonnet-4.6` that's Anthropic. The Anthropic SDK is no longer
+required at runtime; we use the openai SDK pointed at openrouter.ai.
+"""
 from __future__ import annotations
 
 import json
@@ -7,33 +12,25 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
-from anthropic import Anthropic
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
 PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
-DEFAULT_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-5")
+DEFAULT_MODEL = os.getenv("OPENROUTER_MODEL", "anthropic/claude-sonnet-4.6")
+BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
 
 
 @lru_cache(maxsize=1)
-def client() -> Anthropic:
-    # Supports native Anthropic (x-api-key) OR an Anthropic-compatible proxy
-    # like OpenRouter (Authorization: Bearer). Set ANTHROPIC_BASE_URL +
-    # ANTHROPIC_AUTH_TOKEN to route through OpenRouter.
-    base_url = os.getenv("ANTHROPIC_BASE_URL")
-    auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN")
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not (auth_token or api_key):
+def client() -> OpenAI:
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
         raise RuntimeError(
-            "Set ANTHROPIC_API_KEY (native Anthropic) or ANTHROPIC_AUTH_TOKEN "
-            "with ANTHROPIC_BASE_URL (OpenRouter). Copy .env.example to .env."
+            "OPENROUTER_API_KEY not set. Add it to .env "
+            "(get one at https://openrouter.ai/keys)."
         )
-    return Anthropic(
-        api_key=api_key or None,
-        auth_token=auth_token or None,
-        base_url=base_url or None,
-    )
+    return OpenAI(api_key=api_key, base_url=BASE_URL)
 
 
 @lru_cache(maxsize=16)
@@ -47,20 +44,19 @@ def call(
     *,
     model: str | None = None,
     max_tokens: int = 1024,
-    cache_system: bool = False,
+    cache_system: bool = False,  # kept for API compat; OpenRouter caches transparently
 ) -> str:
-    """Single-shot text completion. Returns the text body of the first content block."""
-    msg = client().messages.create(
+    """Single-shot text completion. Returns the content of the first choice."""
+    del cache_system  # OpenRouter handles caching server-side for Anthropic models
+    resp = client().chat.completions.create(
         model=model or DEFAULT_MODEL,
         max_tokens=max_tokens,
-        system=(
-            [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}]
-            if cache_system
-            else system
-        ),
-        messages=[{"role": "user", "content": user}],
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
     )
-    return msg.content[0].text.strip()
+    return (resp.choices[0].message.content or "").strip()
 
 
 def call_json(system: str, user: str, **kwargs) -> dict:

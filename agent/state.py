@@ -20,6 +20,7 @@ class TicketState(TypedDict, total=False):
     buyer_persona: str
     escalation_flags: list[str]
     classification_confidence: float
+    persona_keyword_hits: dict[str, int]
 
     # KB search (from search_kb node)
     kb_hits: list[dict[str, Any]]

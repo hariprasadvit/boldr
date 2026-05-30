@@ -1,10 +1,13 @@
 .venv/
 __pycache__/
 *.pyc
+.DS_Store
+.claude/
 .env
 kb/chroma_db/
 outputs/*.csv
 outputs/*.json
 outputs/*.md
+outputs/*.log
 outputs/kb_drafts/*
 !outputs/.gitkeep

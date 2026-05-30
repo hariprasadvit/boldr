@@ -15,10 +15,14 @@ Classify the inbound ticket below across THREE dimensions and return STRICT JSON
 - health_conscious  — asks about safety, allergies, BPA, nickel, kids, certifications, materials toxicity
 - gifter            — buying as gift, engraving, gift wrap, time-bound (birthday/wedding/Father's Day)
 - enthusiast        — knows watch terminology (lug width, movement, NATO, mesh, Grade 5), specs-focused, third-party strap shopping
-- niche_buyer       — niche use cases (MRI, trail running, climbing, altitude), sustainability/vegan/recycling, collaborations, resale
-- prospect          — first-time-buyer flavour: comparison questions, return policy, sustainability for first time, sizing
-- owner_aftercare   — already owns a Boldr, asking about service/battery/polish/older model
-- transactional     — order-related (status, tracking, refund, cancel, customs, address) without other personality cues
+- active            — active lifestyle, outdoor, swimming/diving, trail running, climbing, rugged-use, sizing/fit, model comparison, order/delivery readiness
+- sustainable       — sustainability, vegan materials, recycling/take-back, carbon-neutral shipping, ethical sourcing, responsible packaging
+
+### Trigger keywords per persona (from Boldr's buyer-persona playbook)
+If the message contains any of these exact words/phrases, that's strong evidence
+for the corresponding persona. Weigh keyword hits against the descriptive
+definitions above — keywords are signal, not law.
+{persona_keywords}
 
 ## 3. escalation_flags (list, can be empty)
 Include any that apply:

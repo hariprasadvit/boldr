@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --muted: #71717a;
+  --border: #27272a;
+  --surface: #18181b;
+  --surface-hover: #1f1f23;
+  --accent: #f59e0b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "JetBrains Mono", monospace;
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Minimal prose styling for markdown (brief, bench, kb entries) */
+.prose {
+  color: #e4e4e7;
+  line-height: 1.6;
+  max-width: 72ch;
+}
+.prose h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  color: #fafafa;
+  letter-spacing: -0.02em;
+}
+.prose h2 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #fafafa;
+  letter-spacing: -0.01em;
+}
+.prose h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #fafafa;
+}
+.prose p { margin-bottom: 1rem; }
+.prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { margin-bottom: 0.25rem; }
+.prose strong { color: #fafafa; font-weight: 600; }
+.prose code {
+  background: #18181b;
+  border: 1px solid #27272a;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+  font-family: var(--font-mono);
+}
+.prose pre {
+  background: #18181b;
+  border: 1px solid #27272a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.prose pre code { background: transparent; border: 0; padding: 0; }
+.prose blockquote {
+  border-left: 3px solid #f59e0b;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #a1a1aa;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+.prose th, .prose td {
+  border: 1px solid #27272a;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose th {
+  background: #18181b;
+  font-weight: 600;
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid #27272a;
+  margin: 1.5rem 0;
+}
+.prose a {
+  color: #f59e0b;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
