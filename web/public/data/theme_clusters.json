@@ -1,0 +1,993 @@
+[
+  {
+    "cluster_id": 21,
+    "size": 4,
+    "theme_label": "Watch Strap Material Safety",
+    "theme_summary": "Health-conscious customers are asking about the safety, composition, and skin-friendliness of watch straps, particularly regarding chemicals, allergens, and material certifications.",
+    "marketing_signal": "This is a clear marketing opportunity \u2014 health-conscious buyers are actively seeking reassurance about strap materials, suggesting that prominently certifying and communicating BPA-free, hypoallergenic, and skin-safe credentials could drive conversions.",
+    "suggested_action": "Add BPA-free, hypoallergenic, and skin-safe material badges to product pages and update the FAQ with a dedicated 'Strap Safety & Materials' section detailing dye processes, silicone certifications, and suitability for sensitive skin.",
+    "persona_breakdown": {
+      "health_conscious": 4
+    },
+    "question_type_breakdown": {
+      "materials_safety": 4
+    },
+    "sample_questions": [
+      "Strap dye safety",
+      "Strap for sensitive skin",
+      "Is the watch strap BPA-free?",
+      "Silicone strap material"
+    ],
+    "ticket_ids": [
+      "TKT-1016",
+      "TKT-1051",
+      "TKT-1048",
+      "TKT-1038"
+    ]
+  },
+  {
+    "cluster_id": 0,
+    "size": 4,
+    "theme_label": "Watch Engraving Options And Pricing",
+    "theme_summary": "Customers, predominantly gifters, are asking about the specifics of engraving customisation including placement locations, multi-line capability, and per-character pricing.",
+    "marketing_signal": "This is a clear product and marketing opportunity \u2014 gifters are actively seeking personalisation features, suggesting that prominently showcasing engraving options could increase gift-driven conversions.",
+    "suggested_action": "Create a dedicated engraving guide page (or expand the FAQ) detailing all placement options (caseback, strap), multi-line availability, character limits, fonts, and a transparent pricing calculator.",
+    "persona_breakdown": {
+      "gifter": 4
+    },
+    "question_type_breakdown": {
+      "engraving": 4
+    },
+    "sample_questions": [
+      "Engraving on watch caseback",
+      "Multi-line engraving",
+      "Engraving on strap",
+      "Engraving price per character"
+    ],
+    "ticket_ids": [
+      "TKT-1047",
+      "TKT-1033",
+      "TKT-1008",
+      "TKT-1063"
+    ]
+  },
+  {
+    "cluster_id": 1,
+    "size": 4,
+    "theme_label": "Expedition Model Materials And Comparison",
+    "theme_summary": "Customers are researching the Expedition model's titanium construction and durability specs, often comparing it to the Journey model or stainless steel alternatives for active and extreme sports use cases.",
+    "marketing_signal": "Strong marketing opportunity: enthusiast and active personas are in a high-intent research phase, indicating purchase consideration \u2014 better material and model differentiation content could accelerate conversion.",
+    "suggested_action": "Create a dedicated Expedition vs Journey comparison page highlighting titanium grade, weight savings, and durability ratings for extreme sports, with a clear materials spec table.",
+    "persona_breakdown": {
+      "enthusiast": 2,
+      "active": 2
+    },
+    "question_type_breakdown": {
+      "materials_safety": 1,
+      "product_general": 3
+    },
+    "sample_questions": [
+      "Titanium grade on the Expedition model",
+      "Watch for extreme sports",
+      "Difference between Expedition and Journey",
+      "Titanium vs stainless steel case"
+    ],
+    "ticket_ids": [
+      "TKT-1060",
+      "TKT-1045",
+      "TKT-1025",
+      "TKT-1039"
+    ]
+  },
+  {
+    "cluster_id": 22,
+    "size": 3,
+    "theme_label": "Watch Strap Compatibility And Sizing",
+    "theme_summary": "Customers, primarily enthusiasts, are asking about strap interchangeability, specific lug widths, and third-party NATO strap compatibility across watch models.",
+    "marketing_signal": "This is both a product and marketing opportunity \u2014 enthusiasts who customize straps are high-engagement buyers, and highlighting strap compatibility specs or offering a curated strap ecosystem could drive accessory revenue.",
+    "suggested_action": "Add a dedicated strap compatibility guide to product pages, including lug width specs and confirmed NATO strap compatibility per model, with links to recommended or branded strap accessories.",
+    "persona_breakdown": {
+      "enthusiast": 3
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 3
+    },
+    "sample_questions": [
+      "Interchangeable strap between models",
+      "Strap width for Expedition 40mm",
+      "NATO strap compatibility"
+    ],
+    "ticket_ids": [
+      "TKT-1011",
+      "TKT-1023",
+      "TKT-1044"
+    ]
+  },
+  {
+    "cluster_id": 10,
+    "size": 3,
+    "theme_label": "Order Tracking And Delivery Issues",
+    "theme_summary": "Customers are experiencing anxiety and frustration around the status and whereabouts of their orders, including missing packages and stale tracking information.",
+    "marketing_signal": "This is primarily an operational issue, not a marketing opportunity \u2014 gaps in post-purchase communication and carrier tracking visibility are eroding customer trust and driving avoidable support contacts.",
+    "suggested_action": "Implement proactive post-purchase email/SMS updates with real-time tracking links, and add a self-service 'Where Is My Order' portal to reduce inbound support volume.",
+    "persona_breakdown": {
+      "active": 3
+    },
+    "question_type_breakdown": {
+      "order_status": 3
+    },
+    "sample_questions": [
+      "Where is my order?",
+      "Order not received - presumed lost",
+      "Tracking number not updating"
+    ],
+    "ticket_ids": [
+      "TKT-1009",
+      "TKT-1040",
+      "TKT-1056"
+    ]
+  },
+  {
+    "cluster_id": 2,
+    "size": 3,
+    "theme_label": "Engraving Language And Font Options",
+    "theme_summary": "Customers, primarily gifters, are asking about the availability of non-Latin scripts and font choices for personalized engravings.",
+    "marketing_signal": "This is a product opportunity: supporting multilingual engraving (Chinese, Arabic, etc.) could unlock new international and multicultural gifting segments and serve as a differentiating feature worth promoting.",
+    "suggested_action": "Update the engraving product pages and FAQ with a clear list of supported fonts, scripts, and languages, and consider expanding engraving capabilities to include Chinese characters and Arabic script if not already supported.",
+    "persona_breakdown": {
+      "gifter": 3
+    },
+    "question_type_breakdown": {
+      "engraving": 3
+    },
+    "sample_questions": [
+      "Engraving in Chinese characters",
+      "Engraving in Arabic script",
+      "Font options for engraving"
+    ],
+    "ticket_ids": [
+      "TKT-1049",
+      "TKT-1070",
+      "TKT-1069"
+    ]
+  },
+  {
+    "cluster_id": 14,
+    "size": 3,
+    "theme_label": "Pre And Post Order Management",
+    "theme_summary": "Customers need to modify, cancel, or track the financial outcome of recent orders, reflecting a desire for control and transparency after purchase.",
+    "marketing_signal": "Primarily operational, but signals a gap in post-purchase self-service tools \u2014 improving order management capabilities could reduce support volume and increase buyer confidence, serving as a retention differentiator.",
+    "suggested_action": "Build a self-service Order Management portal allowing customers to update delivery addresses, cancel orders, and check refund status without contacting support.",
+    "persona_breakdown": {
+      "active": 3
+    },
+    "question_type_breakdown": {
+      "order_status": 3
+    },
+    "sample_questions": [
+      "Refund status",
+      "Change delivery address",
+      "Cancel order before shipping"
+    ],
+    "ticket_ids": [
+      "TKT-1043",
+      "TKT-1057",
+      "TKT-1055"
+    ]
+  },
+  {
+    "cluster_id": 6,
+    "size": 3,
+    "theme_label": "Strap Material Safety And Ethics",
+    "theme_summary": "Customers are asking about the strap's material composition to verify it is safe for sensitive skin, hypoallergenic, and aligned with vegan values.",
+    "marketing_signal": "This is a marketing opportunity \u2014 health-conscious and ethical consumers are actively seeking reassurance that could be proactively addressed with clear material certifications and labeling on product pages.",
+    "suggested_action": "Add hypoallergenic, nickel-free, and vegan-certified badges alongside a detailed material breakdown to the strap product page and FAQ.",
+    "persona_breakdown": {
+      "health_conscious": 2,
+      "sustainable": 1
+    },
+    "question_type_breakdown": {
+      "materials_safety": 3
+    },
+    "sample_questions": [
+      "Alloy composition of the strap",
+      "Hypoallergenic claim",
+      "Vegan-friendly materials"
+    ],
+    "ticket_ids": [
+      "TKT-1032",
+      "TKT-1003",
+      "TKT-1036"
+    ]
+  },
+  {
+    "cluster_id": 30,
+    "size": 2,
+    "theme_label": "Pricing And Bulk Purchasing",
+    "theme_summary": "Customers are seeking cost-saving options, either through price matching competitors or purchasing in larger wholesale quantities.",
+    "marketing_signal": "This is both a marketing and operational opportunity \u2014 the presence of a gifter persona alongside bulk order interest suggests potential for a dedicated gifting or corporate bulk program that could drive higher-volume sales.",
+    "suggested_action": "Create a dedicated 'Bulk & Corporate Gifting' landing page that outlines wholesale pricing tiers and a price match policy, reducing friction for high-value buyers.",
+    "persona_breakdown": {
+      "active": 1,
+      "gifter": 1
+    },
+    "question_type_breakdown": {
+      "product_general": 2
+    },
+    "sample_questions": [
+      "Price match",
+      "Wholesale or bulk order"
+    ],
+    "ticket_ids": [
+      "TKT-1068",
+      "TKT-1019"
+    ]
+  },
+  {
+    "cluster_id": 4,
+    "size": 2,
+    "theme_label": "Purchase Protection And Policies",
+    "theme_summary": "Customers are seeking clarity on post-purchase protections, specifically how long products are covered under warranty and what options exist for returning items.",
+    "marketing_signal": "This is both an operational and marketing opportunity \u2014 prominently displaying strong warranty and return policies can reduce pre-purchase hesitation and serve as a competitive differentiator.",
+    "suggested_action": "Add a visible 'Buyer Protection' summary badge or section on product pages and at checkout highlighting the warranty period and return policy key terms.",
+    "persona_breakdown": {
+      "active": 2
+    },
+    "question_type_breakdown": {
+      "product_general": 2
+    },
+    "sample_questions": [
+      "Warranty period",
+      "Return policy"
+    ],
+    "ticket_ids": [
+      "TKT-1034",
+      "TKT-1017"
+    ]
+  },
+  {
+    "cluster_id": 8,
+    "size": 2,
+    "theme_label": "Gift Presentation And Personalisation",
+    "theme_summary": "Customers purchasing as gifts want to know what options are available to make their gift feel special, including wrapping and personalised touches.",
+    "marketing_signal": "This is a clear product and marketing opportunity \u2014 gifters are a high-intent segment willing to pay a premium for enhanced presentation, and visible gifting features can directly drive conversion and average order value.",
+    "suggested_action": "Create a dedicated 'Gifting Options' page or checkout module clearly showcasing gift wrapping choices, personalisation options (e.g. message cards, engraving, custom packaging), and any associated costs.",
+    "persona_breakdown": {
+      "gifter": 2
+    },
+    "question_type_breakdown": {
+      "product_general": 1,
+      "engraving": 1
+    },
+    "sample_questions": [
+      "Gift wrapping",
+      "Gifting - personalisation options"
+    ],
+    "ticket_ids": [
+      "TKT-1015",
+      "TKT-1027"
+    ]
+  },
+  {
+    "cluster_id": 3,
+    "size": 2,
+    "theme_label": "Child Safety And Certification",
+    "theme_summary": "Customers, particularly health-conscious parents, are asking about the watch's safety credentials and regulatory compliance for children's use.",
+    "marketing_signal": "This is a clear marketing opportunity \u2014 prominently featuring EU safety certifications and child-safety assurances could directly convert health-conscious parents who are on the fence about purchasing.",
+    "suggested_action": "Add a dedicated 'Safety & Certifications' badge or section to the product page highlighting EU certification details and child-safe materials.",
+    "persona_breakdown": {
+      "health_conscious": 2
+    },
+    "question_type_breakdown": {
+      "materials_safety": 2
+    },
+    "sample_questions": [
+      "Is the watch safe for kids?",
+      "EU safety certification"
+    ],
+    "ticket_ids": [
+      "TKT-1066",
+      "TKT-1067"
+    ]
+  },
+  {
+    "cluster_id": 35,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Magnetic field resistance",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Magnetic field resistance"
+    ],
+    "ticket_ids": [
+      "TKT-1046"
+    ]
+  },
+  {
+    "cluster_id": 37,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Servicing older model",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Servicing older model"
+    ],
+    "ticket_ids": [
+      "TKT-1010"
+    ]
+  },
+  {
+    "cluster_id": 43,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Rubber strap for swimming",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Rubber strap for swimming"
+    ],
+    "ticket_ids": [
+      "TKT-1035"
+    ]
+  },
+  {
+    "cluster_id": 39,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Express shipping option",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "gifter": 1
+    },
+    "question_type_breakdown": {
+      "product_general": 1
+    },
+    "sample_questions": [
+      "Express shipping option"
+    ],
+    "ticket_ids": [
+      "TKT-1002"
+    ]
+  },
+  {
+    "cluster_id": 33,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Water resistance re-testing after service",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Water resistance re-testing after service"
+    ],
+    "ticket_ids": [
+      "TKT-1006"
+    ]
+  },
+  {
+    "cluster_id": 23,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Limited edition availability",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Limited edition availability"
+    ],
+    "ticket_ids": [
+      "TKT-1030"
+    ]
+  },
+  {
+    "cluster_id": 24,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Luminous material safety",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "health_conscious": 1
+    },
+    "question_type_breakdown": {
+      "materials_safety": 1
+    },
+    "sample_questions": [
+      "Luminous material safety"
+    ],
+    "ticket_ids": [
+      "TKT-1021"
+    ]
+  },
+  {
+    "cluster_id": 41,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Strap length for large wrist",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Strap length for large wrist"
+    ],
+    "ticket_ids": [
+      "TKT-1037"
+    ]
+  },
+  {
+    "cluster_id": 42,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Customs duties - who pays?",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "order_status": 1
+    },
+    "sample_questions": [
+      "Customs duties - who pays?"
+    ],
+    "ticket_ids": [
+      "TKT-1005"
+    ]
+  },
+  {
+    "cluster_id": 44,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Discount code not working",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Discount code not working"
+    ],
+    "ticket_ids": [
+      "TKT-1007"
+    ]
+  },
+  {
+    "cluster_id": 25,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Altitude performance",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Altitude performance"
+    ],
+    "ticket_ids": [
+      "TKT-1065"
+    ]
+  },
+  {
+    "cluster_id": 40,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Servicing turnaround time",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Servicing turnaround time"
+    ],
+    "ticket_ids": [
+      "TKT-1001"
+    ]
+  },
+  {
+    "cluster_id": 36,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Engraving depth and visibility",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "gifter": 1
+    },
+    "question_type_breakdown": {
+      "engraving": 1
+    },
+    "sample_questions": [
+      "Engraving depth and visibility"
+    ],
+    "ticket_ids": [
+      "TKT-1022"
+    ]
+  },
+  {
+    "cluster_id": 34,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Resale value of titanium watches",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Resale value of titanium watches"
+    ],
+    "ticket_ids": [
+      "TKT-1052"
+    ]
+  },
+  {
+    "cluster_id": 46,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Engraving turnaround time",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "gifter": 1
+    },
+    "question_type_breakdown": {
+      "engraving": 1
+    },
+    "sample_questions": [
+      "Engraving turnaround time"
+    ],
+    "ticket_ids": [
+      "TKT-1058"
+    ]
+  },
+  {
+    "cluster_id": 19,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Battery replacement cost",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Battery replacement cost"
+    ],
+    "ticket_ids": [
+      "TKT-1004"
+    ]
+  },
+  {
+    "cluster_id": 31,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Regulation service",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Regulation service"
+    ],
+    "ticket_ids": [
+      "TKT-1062"
+    ]
+  },
+  {
+    "cluster_id": 26,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Wrong item received",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "order_status": 1
+    },
+    "sample_questions": [
+      "Wrong item received"
+    ],
+    "ticket_ids": [
+      "TKT-1029"
+    ]
+  },
+  {
+    "cluster_id": 27,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Movement service vs battery",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Movement service vs battery"
+    ],
+    "ticket_ids": [
+      "TKT-1061"
+    ]
+  },
+  {
+    "cluster_id": 12,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Collaboration with independent watchmakers",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Collaboration with independent watchmakers"
+    ],
+    "ticket_ids": [
+      "TKT-1014"
+    ]
+  },
+  {
+    "cluster_id": 32,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Strap colour options",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Strap colour options"
+    ],
+    "ticket_ids": [
+      "TKT-1064"
+    ]
+  },
+  {
+    "cluster_id": 20,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Can I engrave a logo or image?",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "gifter": 1
+    },
+    "question_type_breakdown": {
+      "engraving": 1
+    },
+    "sample_questions": [
+      "Can I engrave a logo or image?"
+    ],
+    "ticket_ids": [
+      "TKT-1041"
+    ]
+  },
+  {
+    "cluster_id": 17,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Leather strap care",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Leather strap care"
+    ],
+    "ticket_ids": [
+      "TKT-1053"
+    ]
+  },
+  {
+    "cluster_id": 38,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Servicing warranty",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Servicing warranty"
+    ],
+    "ticket_ids": [
+      "TKT-1054"
+    ]
+  },
+  {
+    "cluster_id": 18,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Quick-release strap mechanism",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Quick-release strap mechanism"
+    ],
+    "ticket_ids": [
+      "TKT-1031"
+    ]
+  },
+  {
+    "cluster_id": 28,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Full service - what's included?",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Full service - what's included?"
+    ],
+    "ticket_ids": [
+      "TKT-1026"
+    ]
+  },
+  {
+    "cluster_id": 45,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Engraving mistake - can it be corrected?",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "gifter": 1
+    },
+    "question_type_breakdown": {
+      "engraving": 1
+    },
+    "sample_questions": [
+      "Engraving mistake - can it be corrected?"
+    ],
+    "ticket_ids": [
+      "TKT-1020"
+    ]
+  },
+  {
+    "cluster_id": 15,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Sending watch for service internationally",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Sending watch for service internationally"
+    ],
+    "ticket_ids": [
+      "TKT-1059"
+    ]
+  },
+  {
+    "cluster_id": 9,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Watch size recommendation",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "product_general": 1
+    },
+    "sample_questions": [
+      "Watch size recommendation"
+    ],
+    "ticket_ids": [
+      "TKT-1012"
+    ]
+  },
+  {
+    "cluster_id": 11,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Sustainability practices",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "sustainable": 1
+    },
+    "question_type_breakdown": {
+      "product_general": 1
+    },
+    "sample_questions": [
+      "Sustainability practices"
+    ],
+    "ticket_ids": [
+      "TKT-1024"
+    ]
+  },
+  {
+    "cluster_id": 16,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Scratches on case - can you polish?",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1
+    },
+    "sample_questions": [
+      "Scratches on case - can you polish?"
+    ],
+    "ticket_ids": [
+      "TKT-1050"
+    ]
+  },
+  {
+    "cluster_id": 13,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Strap recycling programme",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "sustainable": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Strap recycling programme"
+    ],
+    "ticket_ids": [
+      "TKT-1028"
+    ]
+  },
+  {
+    "cluster_id": 29,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Mesh bracelet compatibility",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Mesh bracelet compatibility"
+    ],
+    "ticket_ids": [
+      "TKT-1018"
+    ]
+  },
+  {
+    "cluster_id": 5,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Water resistance and materials",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "active": 1
+    },
+    "question_type_breakdown": {
+      "strap_compatibility": 1
+    },
+    "sample_questions": [
+      "Water resistance and materials"
+    ],
+    "ticket_ids": [
+      "TKT-1042"
+    ]
+  },
+  {
+    "cluster_id": 7,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Carbon footprint of shipping",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "sustainable": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Carbon footprint of shipping"
+    ],
+    "ticket_ids": [
+      "TKT-1013"
+    ]
+  }
+]

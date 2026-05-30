@@ -11,6 +11,7 @@ from agent.state import TicketState
 
 HIGH_CONFIDENCE = 0.72   # auto-reply allowed at-or-above
 GAP_THRESHOLD   = 0.50   # below = treat as knowledge gap
+MIN_CLASSIFICATION_CONFIDENCE = 0.55
 
 # Flags that ALWAYS force a human (regardless of KB confidence)
 HARD_HUMAN_FLAGS = {
@@ -41,6 +42,7 @@ def run(state: TicketState) -> TicketState:
     qtype = state.get("question_type", "")
     persona = state.get("buyer_persona", "")
     confidence = state.get("kb_confidence", 0.0)
+    classification_confidence = state.get("classification_confidence", 1.0)
 
     # Hardest gates first
     hard_flag_hit = flags & HARD_HUMAN_FLAGS
@@ -57,6 +59,14 @@ def run(state: TicketState) -> TicketState:
     if (persona, qtype) in LIABILITY_PAIRS:
         state["route"] = "human_review"
         state["route_reason"] = f"liability pair: {persona} asking {qtype} — human-reviewed"
+        return state
+
+    if classification_confidence < MIN_CLASSIFICATION_CONFIDENCE:
+        state["route"] = "human_review"
+        state["route_reason"] = (
+            f"classification confidence {classification_confidence:.2f} < "
+            f"{MIN_CLASSIFICATION_CONFIDENCE} — draft for human"
+        )
         return state
 
     # Confidence-based routing

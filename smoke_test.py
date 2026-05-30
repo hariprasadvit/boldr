@@ -31,20 +31,22 @@ def test_kb_search():
 def test_routing_branches():
     cases = [
         # (state, expected_route, label)
-        ({"escalation_flags": ["angry"], "kb_confidence": 0.9, "question_type": "product_general", "buyer_persona": "prospect"},
+        ({"escalation_flags": ["angry"], "kb_confidence": 0.9, "question_type": "product_general", "buyer_persona": "active"},
          "human_review", "angry → human"),
-        ({"escalation_flags": ["order_id_mismatch"], "kb_confidence": 0.8, "question_type": "order_status", "buyer_persona": "transactional"},
+        ({"escalation_flags": ["order_id_mismatch"], "kb_confidence": 0.8, "question_type": "order_status", "buyer_persona": "active"},
          "human_review", "order_id mismatch → human"),
         ({"escalation_flags": [], "kb_confidence": 0.85, "question_type": "engraving", "buyer_persona": "gifter"},
          "auto_reply", "high confidence engraving → auto"),
-        ({"escalation_flags": [], "kb_confidence": 0.30, "question_type": "knowledge_gap", "buyer_persona": "niche_buyer"},
+        ({"escalation_flags": [], "kb_confidence": 0.30, "question_type": "knowledge_gap", "buyer_persona": "sustainable"},
          "knowledge_gap", "low confidence → gap"),
         ({"escalation_flags": [], "kb_confidence": 0.85, "question_type": "materials_safety", "buyer_persona": "health_conscious"},
          "human_review", "health × safety → human (liability pair)"),
-        ({"escalation_flags": [], "kb_confidence": 0.85, "question_type": "order_status", "buyer_persona": "transactional"},
+        ({"escalation_flags": [], "kb_confidence": 0.85, "question_type": "order_status", "buyer_persona": "active"},
          "human_review", "order_status always → human"),
         ({"escalation_flags": [], "kb_confidence": 0.60, "question_type": "engraving", "buyer_persona": "gifter"},
          "human_review", "mid-band → human review"),
+        ({"escalation_flags": [], "classification_confidence": 0.30, "kb_confidence": 0.90, "question_type": "engraving", "buyer_persona": "gifter"},
+         "human_review", "low classification confidence → human review"),
     ]
     for state, expected, label in cases:
         out = decide_route.run(dict(state))
@@ -68,14 +70,35 @@ def test_order_id_mismatch_detection():
     print("  ✓ order_id mismatch detector handles all cases")
 
 
+def test_classification_validation():
+    from agent.nodes.classify import _validate_result
+
+    qtype, persona, flags, confidence, errors = _validate_result({
+        "question_type": "unknown",
+        "buyer_persona": "active",
+        "escalation_flags": ["angry", "made_up_flag"],
+        "confidence": 1.4,
+    })
+
+    assert qtype == "product_general"
+    assert persona == "active"
+    assert confidence == 1.0
+    assert "angry" in flags
+    assert "classification_error" in flags
+    assert errors
+    print("  ✓ classifier JSON validation fails closed")
+
+
 if __name__ == "__main__":
     print("=== Boldr Intel — non-LLM smoke test ===\n")
-    print("[1/4] KB search…")
+    print("[1/5] KB search…")
     test_kb_search()
-    print("\n[2/4] Routing branches…")
+    print("\n[2/5] Routing branches…")
     test_routing_branches()
-    print("\n[3/4] Graph compile…")
+    print("\n[3/5] Graph compile…")
     test_graph_compiles()
-    print("\n[4/4] order_id mismatch detector…")
+    print("\n[4/5] order_id mismatch detector…")
     test_order_id_mismatch_detection()
+    print("\n[5/5] classifier JSON validation…")
+    test_classification_validation()
     print("\n✓ All non-LLM checks passed. Drop ANTHROPIC_API_KEY into .env to run the full pipeline.")

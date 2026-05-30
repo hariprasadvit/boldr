@@ -1,6 +1,6 @@
 gap_id,first_seen,question_paraphrase,theme,frequency,buyer_persona,marketing_signal,kb_draft_status,sample_ticket_ids
-GAP-001,2026-01-08,Are your straps vegan-friendly?,sustainability,1,niche_buyer,yes,answered_added_to_faq,
-GAP-002,2026-01-15,Do you offer carbon-neutral shipping?,sustainability,1,niche_buyer,yes,pending_checking_with_ops,
-GAP-003,2026-01-22,Is the watch shock-rated for trail running?,product_specs,1,niche_buyer,no,answered_added_to_faq,
-GAP-004,2026-02-03,Magnetic field resistance (MRI environments),product_specs,1,niche_buyer,no,pending_checking_with_supplier,
-GAP-005,2026-02-14,Can I get corporate bulk pricing?,sales,1,prospect,yes,redirected_to_corporate_email,
+GAP-001,2026-01-08,Are your straps vegan-friendly?,sustainability,1,sustainable,yes,answered_added_to_faq,
+GAP-002,2026-01-15,Do you offer carbon-neutral shipping?,sustainability,1,sustainable,yes,pending_checking_with_ops,
+GAP-003,2026-01-22,Is the watch shock-rated for trail running?,product_specs,1,active,no,answered_added_to_faq,
+GAP-004,2026-02-03,Magnetic field resistance (MRI environments),product_specs,1,active,no,pending_checking_with_supplier,
+GAP-005,2026-02-14,Can I get corporate bulk pricing?,sales,1,active,yes,redirected_to_corporate_email,

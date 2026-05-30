@@ -1,0 +1,102 @@
+[
+  {
+    "ticket_id": "TKT-1030",
+    "date_first_seen": "2025-12-03 16:19",
+    "question_paraphrase": "Is a limited edition collaboration product seen on social media still available for purchase or has it sold out?",
+    "theme": "sales",
+    "buyer_persona": "enthusiast",
+    "kb_confidence": 0.339,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Are limited edition collaboration pieces still available to purchase?\nA: Limited edition collaborations often sell out quickly, so availability can change rapidly. We recommend reaching out to our team directly or checking the product page linked in the original post for the most up-to-date stock information. If a piece has sold out, our team may be able to advise on waitlist options or upcoming releases.\n\nSection: General"
+  },
+  {
+    "ticket_id": "TKT-1037",
+    "date_first_seen": "2025-12-04 16:19",
+    "question_paraphrase": "Will the standard strap length accommodate a larger wrist size, or is an extended strap required?",
+    "theme": "sizing",
+    "buyer_persona": "active",
+    "kb_confidence": 0.445,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Will the standard strap length fit a larger wrist?\nA: Standard Boldr straps are designed to fit a wide range of wrist sizes, but fit can vary depending on the specific strap style and buckle position. If you have a larger wrist, we recommend reaching out to our team with your wrist circumference so they can confirm whether the standard length will work for you or if an extended option is available. We want to make sure you get the most comfortable fit possible.\n\nSection: Strap Compatibility"
+  },
+  {
+    "ticket_id": "TKT-1007",
+    "date_first_seen": "2025-12-14 16:19",
+    "question_paraphrase": "Why is my discount code showing as invalid at checkout?",
+    "theme": "sales",
+    "buyer_persona": "active",
+    "kb_confidence": 0.469,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Why is a discount code showing as invalid at checkout?\nA: Discount codes can show as invalid if they have expired, have already been used, or don't apply to the items in the cart. We recommend double-checking any minimum order requirements or exclusions tied to the code, and reaching out to our team directly so they can verify the code's status and assist with applying it.\n\nSection: Orders & Shipping"
+  },
+  {
+    "ticket_id": "TKT-1065",
+    "date_first_seen": "2025-12-19 16:19",
+    "question_paraphrase": "Does the watch function normally at high altitudes (e.g., 5,000m above sea level)?",
+    "theme": "niche_use_case",
+    "buyer_persona": "active",
+    "kb_confidence": 0.46,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Will a Boldr watch perform normally at high altitude?\nA: Boldr watches are built for adventure and designed to handle demanding outdoor conditions, but specific performance data at extreme altitudes (such as 5,000m above sea level) has not been confirmed in our knowledge base. Factors like temperature drops and air pressure changes at high altitude can affect certain watch functions, particularly battery-powered or pressure-sensitive components. We recommend reaching out to our team directly with your specific model so they can provide accurate guidance before your trek.\n\nSection: General"
+  },
+  {
+    "ticket_id": "TKT-1061",
+    "date_first_seen": "2026-03-02 16:19",
+    "question_paraphrase": "What is the difference between a full movement service and a simple battery replacement, and is a movement service worth the cost?",
+    "theme": "servicing",
+    "buyer_persona": "enthusiast",
+    "kb_confidence": 0.485,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: What is the difference between a movement service and a battery replacement, and is a movement service worth it?\nA: A battery replacement simply swaps out the power source in a quartz watch, while a full movement service is a more comprehensive procedure that involves disassembling, cleaning, lubricating, and reassembling the watch's internal components to restore optimal performance and longevity. A movement service is generally recommended for mechanical watches or when a watch is showing signs of wear beyond a depleted battery, such as timekeeping inaccuracies or resistance during winding. For most enthusiasts who want to protect a long-term investment, a periodic movement service is considered worthwhile. Reach out to our team directly to discuss your specific watch and get a recommendation tailored to its condition and service history.\n\nSection: Watch Servicing"
+  },
+  {
+    "ticket_id": "TKT-1012",
+    "date_first_seen": "2026-04-04 16:19",
+    "question_paraphrase": "Is a 40mm case suitable for a small wrist, and are there smaller case size options available?",
+    "theme": "sizing",
+    "buyer_persona": "active",
+    "kb_confidence": 0.435,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Will a 40mm case look oversized on a smaller wrist, and is there a smaller case size available?\nA: On smaller wrists, a 40mm case can sometimes appear prominent, though fit ultimately depends on personal preference and lug-to-lug measurement as much as case diameter. We recommend reaching out to our team directly, as they can share current case size options and help you find the best match for your wrist. If a smaller case is something you're considering, our team can also advise on any upcoming or alternative models that may suit a finer fit.\n\nSection: General"
+  },
+  {
+    "ticket_id": "TKT-1024",
+    "date_first_seen": "2026-04-06 16:19",
+    "question_paraphrase": "What are the brand's environmental practices and is the product packaging recyclable?",
+    "theme": "sustainability",
+    "buyer_persona": "sustainable",
+    "kb_confidence": 0.355,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: What are Boldr's environmental practices, and is their packaging recyclable?\nA: Boldr is committed to responsible craftsmanship and sustainability, though specific details about current environmental initiatives and packaging materials are best confirmed directly with our team, as practices may evolve. We recommend reaching out to hello@boldr.io to ask about packaging recyclability and any active sustainability programs. Our team will be happy to share the most up-to-date information.\n\nSection: General"
+  },
+  {
+    "ticket_id": "TKT-1050",
+    "date_first_seen": "2026-04-12 16:19",
+    "question_paraphrase": "Is it possible to have light scratches on a watch case polished as part of a service?",
+    "theme": "servicing",
+    "buyer_persona": "active",
+    "kb_confidence": 0.467,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Can light scratches on the watch case be polished during a service?\nA: Yes, case polishing is typically available as part of or alongside a service \u2014 our team can assess the scratches and advise on the best approach for your specific model. Keep in mind that polishing removes a very fine layer of material, so it may not be suitable for all case finishes or designs. We recommend reaching out to our team before booking your service so they can confirm what's possible for your watch. Contact us at [support link/email] to get started.\n\nSection: Watch Servicing"
+  },
+  {
+    "ticket_id": "TKT-1028",
+    "date_first_seen": "2026-04-22 16:19",
+    "question_paraphrase": "Does the company offer a strap recycling or take-back programme for responsible disposal of old straps?",
+    "theme": "sustainability",
+    "buyer_persona": "sustainable",
+    "kb_confidence": 0.455,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Does Boldr offer a strap recycling or take-back programme for old straps?\nA: Boldr is committed to sustainability, but whether a formal strap recycling or take-back programme is currently available is something our team will need to confirm. We'd encourage customers with old straps to reach out directly so we can advise on any existing options or responsible disposal partners. If a programme isn't yet in place, your feedback is genuinely valued \u2014 it helps shape future sustainability initiatives.\n\nSection: General"
+  },
+  {
+    "ticket_id": "TKT-1013",
+    "date_first_seen": "2026-05-10 16:19",
+    "question_paraphrase": "Does the company offer carbon-neutral or offset shipping options?",
+    "theme": "sustainability",
+    "buyer_persona": "sustainable",
+    "kb_confidence": 0.406,
+    "kb_draft_status": "drafted_pending_approval",
+    "kb_entry_draft": "Q: Does Boldr offer carbon-neutral or offset shipping options?\nA: Boldr is committed to responsible practices, and we appreciate customers who prioritise sustainability. We're currently verifying the specifics of our shipping carbon-offset options, so we recommend reaching out to our team directly at for the most up-to-date information. We'll continue to update our policies as our sustainability initiatives develop.\n\nSection: Orders & Shipping"
+  }
+]
