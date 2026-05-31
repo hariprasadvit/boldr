@@ -19,6 +19,8 @@ export default defineConfig({
   // Build straight into the backend's default STATIC_DIR so FastAPI serves the
   // SPA single-origin out of the box. Override VITE_OUT_DIR for other layouts.
   build: {
+    // Single-process deploy: build into the backend's STATIC_DIR so FastAPI
+    // serves the SPA same-origin. Override VITE_OUT_DIR for other layouts.
     outDir: process.env.VITE_OUT_DIR ?? "../backend/static",
     emptyOutDir: true,
   },

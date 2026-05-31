@@ -42,10 +42,14 @@ def create_app() -> FastAPI:
         docs_url="/docs",
     )
 
+    # Frontend and backend deploy as separate origins, so CORS must allow the
+    # SPA's origin. The API is stateless (no cookies), so when origins is the
+    # "*" wildcard we disable credentials (the spec forbids "*" + credentials).
+    allow_all = "*" in settings.CORS_ORIGINS
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,
-        allow_credentials=True,
+        allow_credentials=not allow_all,
         allow_methods=["*"],
         allow_headers=["*"],
     )

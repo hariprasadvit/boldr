@@ -12,9 +12,17 @@ from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+_BACKEND_ROOT = Path(__file__).resolve().parents[2]
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", extra="ignore", case_sensitive=False
+        # Absolute path so .env loads regardless of the process cwd (e.g. under
+        # Vercel's serverless runtime, which does not run from backend/).
+        env_file=str(_BACKEND_ROOT / ".env"),
+        env_file_encoding="utf-8",
+        extra="ignore",
+        case_sensitive=False,
     )
 
     # ── App ──
@@ -31,7 +39,9 @@ class Settings(BaseSettings):
     # (backend/static, populated by `make build-frontend`); override via env in
     # other deploy layouts. Resolved to an absolute path by `static_path`.
     STATIC_DIR: str = "static"
-    DATA_DIR: str = "../data"  # source CSV/JSON/TXT files (relative to backend/)
+    # Source CSV/JSON/TXT files, bundled inside backend/ so they ship with the
+    # serverless function. Relative paths resolve under backend/.
+    DATA_DIR: str = "data"
 
     # ── Database (Postgres + pgvector) ──
     # Two URLs: async (asyncpg) for the app, sync (psycopg) for Alembic migrations.
