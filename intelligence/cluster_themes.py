@@ -26,8 +26,9 @@ from kb.ingest import get_collection
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "outputs"
 
-DISTANCE_THRESHOLD = 0.45  # cosine distance — lower = tighter clusters
-MIN_CLUSTER_SIZE = 2       # singletons are kept as "novel/uncategorised"
+MAX_CLUSTERS = 10          # cap so themes stay legible for the demo
+TARGET_PER_CLUSTER = 6     # k ≈ n / 6, clamped to [3, MAX_CLUSTERS]
+MIN_CLUSTER_SIZE = 2       # clusters smaller than this are labelled "singleton / novel"
 
 
 def _load_processed_tickets() -> list[dict]:
@@ -55,18 +56,24 @@ def _cosine_distance_matrix(X: np.ndarray) -> np.ndarray:
 
 def cluster():
     rows = _load_processed_tickets()
-    texts = [f"{r['subject']} — {r.get('reply_draft','')[:200]}" for r in rows]
+    # Cluster on the CUSTOMER's words (subject + message), not the agent's reply —
+    # the reply is dominated by shared greeting/sign-off boilerplate, which collapses
+    # everything into one giant cluster or splits it into noise singletons.
+    texts = [
+        f"{r.get('subject','')} — {(r.get('message_body','') or r.get('reply_draft',''))[:400]}"
+        for r in rows
+    ]
 
     print(f"[cluster] embedding {len(texts)} tickets…")
     X = _embed_texts(texts)
     D = _cosine_distance_matrix(X)
 
-    print(f"[cluster] running AgglomerativeClustering (threshold={DISTANCE_THRESHOLD})…")
+    k = max(3, min(MAX_CLUSTERS, round(len(rows) / TARGET_PER_CLUSTER)))
+    print(f"[cluster] running AgglomerativeClustering (k={k})…")
     model = AgglomerativeClustering(
-        n_clusters=None,
+        n_clusters=k,
         metric="precomputed",
         linkage="average",
-        distance_threshold=DISTANCE_THRESHOLD,
     )
     labels = model.fit_predict(D)
 

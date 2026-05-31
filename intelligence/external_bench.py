@@ -20,6 +20,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 OUT = ROOT / "outputs"
 
+# Ordinal ranking so max() picks the strongest signal, not the alphabetical one.
+_SIGNAL_ORDER = {"low": 0, "medium": 1, "high": 2}
+
 # Map external themes (CSV) to internal question_types / keywords
 THEME_MAP = {
     "bpa_free_straps":         {"keywords": ["bpa", "BPA"], "question_types": ["materials_safety"]},
@@ -57,9 +60,9 @@ def _internal_freq(replies: list[dict], spec: dict) -> tuple[int, list[str]]:
         text = f"{r.get('subject','')} {r.get('reply_draft','')}".lower()
         if any(kw.lower() in text for kw in spec["keywords"]):
             matches.append(r["ticket_id"])
-        elif r.get("question_type") in spec["question_types"] and spec["question_types"]:
-            # weaker — only count if keyword check failed but type matches
-            pass
+        elif spec["question_types"] and r.get("question_type") in spec["question_types"]:
+            # weaker signal: question_type matches even though no keyword did
+            matches.append(r["ticket_id"])
     return len(matches), matches[:5]
 
 
@@ -79,7 +82,10 @@ def benchmark():
             continue
         internal_count, sample_ids = _internal_freq(replies, spec)
         sentiments = Counter(e["sentiment"] for e in ext_rows)
-        ext_signal = max((e["signal_strength"] for e in ext_rows), default="low")
+        ext_signal = (
+            max(ext_rows, key=lambda e: _SIGNAL_ORDER.get(e["signal_strength"], 0))["signal_strength"]
+            if ext_rows else "low"
+        )
         sample_quotes = [e["sample_quote"] for e in ext_rows[:2]]
         rows.append({
             "theme": theme,

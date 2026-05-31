@@ -64,6 +64,7 @@ def main(limit: int | None = None):
             "date_received": t.get("date_received", ""),
             "channel": t.get("channel", ""),
             "subject": t.get("subject", ""),
+            "message_body": t.get("message_body", ""),
             "buyer_persona": final.get("buyer_persona", ""),
             "question_type": final.get("question_type", ""),
             "escalation_flags": "|".join(final.get("escalation_flags", [])),
