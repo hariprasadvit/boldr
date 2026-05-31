@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "Boldr Customer Intelligence Engine — self-improving ticket triage + KB + marketing intel."
 requires-python = ">=3.11,<3.14"
 dependencies = [
-    "anthropic>=0.40.0",
+    "langchain>=0.3.0",
+    "langchain-openai>=0.2.0",
     "langgraph>=0.2.0",
     "langchain-core>=0.3.0",
     "chromadb>=0.5.0",
