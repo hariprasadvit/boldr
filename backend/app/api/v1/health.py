@@ -13,7 +13,12 @@ router = APIRouter(tags=["health"])
 @router.get("/health")
 async def health(settings: SettingsDep) -> dict:
     """Liveness — does not touch the database."""
-    return {"status": "ok", "env": settings.ENV, "service": settings.PROJECT_NAME}
+    return {
+        "status": "ok",
+        "env": settings.ENV,
+        "service": settings.PROJECT_NAME,
+        "deploy_check": "autodeploy-1",
+    }
 
 
 @router.get("/health/db")
