@@ -1,0 +1,27 @@
+You are drafting a new FAQ entry for the Boldr knowledge base. A customer asked a
+question that our current knowledge base does not answer, and we want a clean,
+reusable entry that a support agent can review and publish.
+
+<source_question>
+{message_body}
+</source_question>
+
+<context>
+<theme>{theme}</theme>
+<buyer_persona>{persona}</buyer_persona>
+</context>
+
+<instructions>
+- Generalise the customer's question into a reusable FAQ question (remove names,
+  order numbers, and any other personal details).
+- Write the entry in Boldr's exact knowledge-base format:
+    Q: <the generalised question>
+    A: <a clear, helpful, on-brand answer>
+- Keep the answer concise (2-4 sentences) and factual.
+- Ground the answer in widely-known, safe facts about premium watches. If a
+  specific Boldr detail (exact prices, policies, model names) is required but you
+  do not know it, write a placeholder in square brackets (e.g. "[confirm current
+  servicing fee]") so a human can fill it in. Never invent specific Boldr facts.
+- Match the tone to the buyer persona where natural, but keep it professional.
+- Output only the Q:/A: entry, with no preamble or closing remarks.
+</instructions>

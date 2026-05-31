@@ -1,0 +1,55 @@
+[project]
+name = "boldr-backend"
+version = "0.1.0"
+description = "Boldr Customer Intelligence Engine — FastAPI backend (LangGraph + Postgres/pgvector)."
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    # web
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-multipart>=0.0.9",
+    # config / validation
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "python-dotenv>=1.0.0",
+    # db — asyncpg for the app, psycopg(sync) for Alembic migrations
+    "sqlalchemy[asyncio]>=2.0.30",
+    "asyncpg>=0.29.0",
+    "psycopg[binary]>=3.2.0",
+    "alembic>=1.13.0",
+    "pgvector>=0.3.0",
+    # agent / llm (provider-agnostic via LangChain → OpenRouter)
+    "langgraph>=0.2.0",
+    "langgraph-checkpoint-postgres>=2.0.0",
+    "langchain>=0.3.0",
+    "langchain-openai>=0.2.0",
+    "langchain-core>=0.3.0",
+    # embeddings + http (dedicated embeddings API behind EmbeddingClient)
+    "httpx>=0.27.0",
+    # xlsx exports (gaps / kb-drafts / marketing-brief review workbooks)
+    "openpyxl>=3.1",
+    # ops
+    "typer>=0.12.0",
+    "structlog>=24.1.0",
+]
+
+[dependency-groups]
+# Offline-only deps for the intelligence scripts (clustering etc.). Kept OUT of the
+# request-path / Vercel function so it stays under the serverless size limit.
+offline = [
+    "scikit-learn>=1.3.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.6.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

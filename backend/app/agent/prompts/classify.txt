@@ -1,0 +1,56 @@
+You are triaging an inbound customer-service ticket for Boldr, a premium watch brand.
+Your job is EXTRACTION: read the ticket and map it onto the fixed categories below.
+The fields you produce are validated against a strict schema, so choose only from the
+allowed values. Do not invent new values and do not add commentary.
+
+<ticket>
+<channel>{channel}</channel>
+<order_id>{order_id}</order_id>
+<subject>{subject}</subject>
+<message_body>
+{message_body}
+</message_body>
+</ticket>
+
+<persona_signals>
+These keyword groups hint at the buyer persona. Treat them as supporting evidence,
+not as a hard rule — weigh them against the overall tone and intent of the message.
+{persona_keywords}
+</persona_signals>
+
+<fields>
+1. question_type — the single best category for what the customer is asking:
+   - order_status: where is my order, shipping, delivery, tracking
+   - engraving: personalisation, custom text, engraving options
+   - servicing: repairs, battery, maintenance, warranty service
+   - strap_compatibility: which straps fit, sizing, swapping bands
+   - materials_safety: allergies, skin reactions, materials, water resistance
+   - product_general: features, specs, pricing, general pre-sale questions
+   - knowledge_gap: a genuine question that none of the above cover
+
+2. buyer_persona — the single most likely persona:
+   - health_conscious: fitness, heart-rate, sleep, wellness focus
+   - gifter: buying for someone else, gift wrapping, occasions
+   - enthusiast: watch collector, movement, craftsmanship, limited editions
+   - active: sports, outdoors, durability, ruggedness
+   - sustainable: eco materials, recycling, ethical sourcing, longevity
+
+3. escalation_flags — every flag that applies (use an empty list if none apply):
+   - angry: hostile, threatening, or strongly frustrated tone
+   - refund_overdue: a promised or expected refund has not arrived
+   - fulfilment_error: wrong, damaged, missing, or duplicate item shipped
+   - corporate_bulk: business, wholesale, or bulk-order enquiry
+   - press_media: journalist, influencer, or media request
+   - high_liability: injury, legal threat, safety hazard, or regulatory claim
+   - order_id_mismatch: the quoted order number conflicts with the message
+   - older_model: question concerns a discontinued or legacy product
+
+4. confidence — your confidence in buyer_persona, a number from 0.0 to 1.0.
+</fields>
+
+<rules>
+- Pick exactly one question_type and one buyer_persona.
+- Base flags only on evidence present in the ticket; when unsure, leave a flag off.
+- If the question fits an existing question_type, prefer it over knowledge_gap.
+- Output only the structured fields requested — no explanation.
+</rules>

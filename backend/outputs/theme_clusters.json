@@ -1,0 +1,306 @@
+[
+  {
+    "cluster_id": 3,
+    "size": 23,
+    "theme_label": "Watch Strap Safety And Compatibility",
+    "theme_summary": "Customers are asking about the safety of strap materials, suitability for active use, and compatibility/sizing across models, driven largely by health-conscious and active users.",
+    "marketing_signal": "This is both a marketing and product opportunity \u2014 health-conscious and active personas are a dominant segment, and clearly communicating material safety certifications, water resistance, and interchangeability could reduce friction and drive purchase confidence.",
+    "suggested_action": "Create a dedicated 'Strap Guide' page covering material safety certifications (e.g. skin-safe, hypoallergenic), swim/activity suitability, sizing by wrist circumference, and a compatibility matrix showing which straps fit which models.",
+    "persona_breakdown": {
+      "health_conscious": 9,
+      "active": 6,
+      "enthusiast": 6,
+      "sustainable": 2
+    },
+    "question_type_breakdown": {
+      "materials_safety": 12,
+      "strap_compatibility": 8,
+      "product_general": 2,
+      "knowledge_gap": 1
+    },
+    "sample_questions": [
+      "Strap dye safety",
+      "Rubber strap for swimming",
+      "Luminous material safety",
+      "Strap length for large wrist",
+      "Interchangeable strap between models",
+      "Strap width for Expedition 40mm"
+    ],
+    "ticket_ids": [
+      "TKT-1016",
+      "TKT-1035",
+      "TKT-1021",
+      "TKT-1037",
+      "TKT-1011",
+      "TKT-1023",
+      "TKT-1051",
+      "TKT-1034",
+      "TKT-1044",
+      "TKT-1048",
+      "TKT-1038",
+      "TKT-1066",
+      "TKT-1053",
+      "TKT-1032",
+      "TKT-1064",
+      "TKT-1031",
+      "TKT-1025",
+      "TKT-1067",
+      "TKT-1003",
+      "TKT-1028",
+      "TKT-1036",
+      "TKT-1018",
+      "TKT-1042"
+    ]
+  },
+  {
+    "cluster_id": 8,
+    "size": 15,
+    "theme_label": "Service Costs And Logistics",
+    "theme_summary": "Customers are asking about the pricing, timing, and practical details of purchasing and maintaining their watches, including servicing, repairs, and shipping.",
+    "marketing_signal": "Primarily operational, but there is a marketing opportunity: transparent, competitive servicing packages and clear aftercare pricing could be a differentiator that builds trust and loyalty, particularly with the active and enthusiast segments who are likely repeat service customers.",
+    "suggested_action": "Create a dedicated 'Watch Care & Servicing' FAQ page that clearly lists battery replacement costs, regulation service details, turnaround times, water resistance re-testing post-service, and shipping options \u2014 reducing friction and support volume in one move.",
+    "persona_breakdown": {
+      "active": 8,
+      "gifter": 2,
+      "enthusiast": 5
+    },
+    "question_type_breakdown": {
+      "product_general": 5,
+      "order_status": 1,
+      "servicing": 9
+    },
+    "sample_questions": [
+      "Price match",
+      "Express shipping option",
+      "Water resistance re-testing after service",
+      "Servicing turnaround time",
+      "Battery replacement cost",
+      "Regulation service"
+    ],
+    "ticket_ids": [
+      "TKT-1068",
+      "TKT-1002",
+      "TKT-1006",
+      "TKT-1001",
+      "TKT-1004",
+      "TKT-1062",
+      "TKT-1061",
+      "TKT-1054",
+      "TKT-1026",
+      "TKT-1017",
+      "TKT-1059",
+      "TKT-1039",
+      "TKT-1050",
+      "TKT-1019",
+      "TKT-1012"
+    ]
+  },
+  {
+    "cluster_id": 2,
+    "size": 11,
+    "theme_label": "Watch Engraving Service Questions",
+    "theme_summary": "Customers, predominantly gifters, are asking about the specifics of a watch engraving service including placement options, character support, pricing, and turnaround time.",
+    "marketing_signal": "This is both a marketing and operational opportunity \u2014 the high gifter persona signals strong demand for personalized gifting, suggesting engraving could be promoted as a premium gift feature, while operational gaps in pricing and turnaround transparency are causing pre-purchase friction.",
+    "suggested_action": "Create a dedicated Engraving Service page (or expand the FAQ) covering placement options (caseback, strap), supported scripts including Chinese characters, per-character pricing, line limits, and turnaround times \u2014 and promote it in gifting campaigns.",
+    "persona_breakdown": {
+      "gifter": 11
+    },
+    "question_type_breakdown": {
+      "engraving": 11
+    },
+    "sample_questions": [
+      "Engraving on watch caseback",
+      "Multi-line engraving",
+      "Engraving in Chinese characters",
+      "Engraving turnaround time",
+      "Engraving on strap",
+      "Engraving price per character"
+    ],
+    "ticket_ids": [
+      "TKT-1047",
+      "TKT-1033",
+      "TKT-1049",
+      "TKT-1058",
+      "TKT-1008",
+      "TKT-1063",
+      "TKT-1041",
+      "TKT-1020",
+      "TKT-1070",
+      "TKT-1069",
+      "TKT-1022"
+    ]
+  },
+  {
+    "cluster_id": 0,
+    "size": 8,
+    "theme_label": "Order Issues And Fulfillment",
+    "theme_summary": "Customers are experiencing problems across the entire post-purchase journey, including promotions, delivery, incorrect items, lost parcels, refunds, and address changes.",
+    "marketing_signal": "This is primarily operational \u2014 high friction in post-purchase experience risks eroding customer trust and repeat purchase rates, rather than representing a direct marketing opportunity.",
+    "suggested_action": "Build a self-service order management portal allowing customers to track orders, update delivery addresses, and initiate refunds or wrong-item reports without contacting support.",
+    "persona_breakdown": {
+      "active": 8
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1,
+      "order_status": 7
+    },
+    "sample_questions": [
+      "Discount code not working",
+      "Where is my order?",
+      "Wrong item received",
+      "Order not received - presumed lost",
+      "Refund status",
+      "Change delivery address"
+    ],
+    "ticket_ids": [
+      "TKT-1007",
+      "TKT-1009",
+      "TKT-1029",
+      "TKT-1040",
+      "TKT-1043",
+      "TKT-1057",
+      "TKT-1056",
+      "TKT-1055"
+    ]
+  },
+  {
+    "cluster_id": 6,
+    "size": 4,
+    "theme_label": "Titanium Product Value And Practices",
+    "theme_summary": "Customers are asking about titanium-grade watches across models, their long-term resale value, servicing older units, and the sustainability of materials used in production.",
+    "marketing_signal": "This is both a product and marketing opportunity \u2014 enthusiasts are clearly invested in titanium as a premium material, suggesting an opening to highlight titanium's durability, resale value, and eco-credentials to justify premium pricing and build brand loyalty.",
+    "suggested_action": "Create a dedicated 'Titanium Collection' content hub covering grade specifications by model, servicing options for older models, resale value data, and sustainability sourcing practices.",
+    "persona_breakdown": {
+      "enthusiast": 3,
+      "sustainable": 1
+    },
+    "question_type_breakdown": {
+      "servicing": 1,
+      "materials_safety": 1,
+      "knowledge_gap": 2
+    },
+    "sample_questions": [
+      "Servicing older model",
+      "Titanium grade on the Expedition model",
+      "Resale value of titanium watches",
+      "Sustainability practices"
+    ],
+    "ticket_ids": [
+      "TKT-1010",
+      "TKT-1060",
+      "TKT-1052",
+      "TKT-1024"
+    ]
+  },
+  {
+    "cluster_id": 7,
+    "size": 2,
+    "theme_label": "Shipping Costs And Environmental Impact",
+    "theme_summary": "Customers are asking about the financial and environmental responsibilities associated with international shipping, reflecting concerns about both cost transparency and sustainability.",
+    "marketing_signal": "This is both a marketing and operational opportunity \u2014 the sustainability-minded customer segment signals demand for eco-conscious shipping options and clear duty policies that could differentiate the brand.",
+    "suggested_action": "Create a dedicated 'Shipping & Sustainability' FAQ page that clearly outlines who pays customs duties by region and highlights carbon offset or low-emission shipping options available at checkout.",
+    "persona_breakdown": {
+      "active": 1,
+      "sustainable": 1
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 2
+    },
+    "sample_questions": [
+      "Customs duties - who pays?",
+      "Carbon footprint of shipping"
+    ],
+    "ticket_ids": [
+      "TKT-1005",
+      "TKT-1013"
+    ]
+  },
+  {
+    "cluster_id": 4,
+    "size": 2,
+    "theme_label": "Gift Presentation And Personalisation",
+    "theme_summary": "Customers purchasing gifts are asking about options to make their gifts feel special, including wrapping and personalised touches.",
+    "marketing_signal": "This is a clear product and marketing opportunity \u2014 gifters are a high-intent segment willing to pay a premium for enhanced presentation and personalisation, suggesting potential for a dedicated gifting upsell flow or add-on service.",
+    "suggested_action": "Create a dedicated 'Gifting Options' section on product and checkout pages showcasing gift wrapping and personalisation choices, with clear pricing and preview imagery.",
+    "persona_breakdown": {
+      "gifter": 2
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1,
+      "engraving": 1
+    },
+    "sample_questions": [
+      "Gift wrapping",
+      "Gifting - personalisation options"
+    ],
+    "ticket_ids": [
+      "TKT-1015",
+      "TKT-1027"
+    ]
+  },
+  {
+    "cluster_id": 1,
+    "size": 2,
+    "theme_label": "Extreme Sports Watch Performance",
+    "theme_summary": "Customers are asking about watch durability and functionality in demanding active environments, specifically for extreme sports and high-altitude conditions.",
+    "marketing_signal": "This is a clear product and marketing opportunity \u2014 active adventure consumers are evaluating whether the watch meets their specific performance needs, suggesting a gap in targeted messaging for this segment.",
+    "suggested_action": "Create a dedicated 'Built for Extreme Sports' product page or section highlighting altitude performance specs, durability ratings, and real-world use cases for adventure athletes.",
+    "persona_breakdown": {
+      "active": 2
+    },
+    "question_type_breakdown": {
+      "product_general": 2
+    },
+    "sample_questions": [
+      "Watch for extreme sports",
+      "Altitude performance"
+    ],
+    "ticket_ids": [
+      "TKT-1045",
+      "TKT-1065"
+    ]
+  },
+  {
+    "cluster_id": 9,
+    "size": 2,
+    "theme_label": "Exclusive Watchmaker Partnerships And Releases",
+    "theme_summary": "Enthusiasts are asking about collaborations with independent watchmakers and the availability of limited edition pieces, reflecting deep interest in rare and artisan offerings.",
+    "marketing_signal": "This is a clear marketing opportunity \u2014 enthusiast-segment customers are actively seeking exclusive, collectible products, signaling strong appetite for curated drops and partnership storytelling that could drive urgency and brand prestige.",
+    "suggested_action": "Create a dedicated 'Collaborations & Limited Editions' landing page with release calendars, watchmaker profiles, and waitlist sign-up options to capture demand and build anticipation.",
+    "persona_breakdown": {
+      "enthusiast": 2
+    },
+    "question_type_breakdown": {
+      "knowledge_gap": 1,
+      "product_general": 1
+    },
+    "sample_questions": [
+      "Collaboration with independent watchmakers",
+      "Limited edition availability"
+    ],
+    "ticket_ids": [
+      "TKT-1014",
+      "TKT-1030"
+    ]
+  },
+  {
+    "cluster_id": 5,
+    "size": 1,
+    "theme_label": "Singleton / Novel",
+    "theme_summary": "Magnetic field resistance",
+    "marketing_signal": "Single occurrence \u2014 monitor for recurrence",
+    "suggested_action": "",
+    "persona_breakdown": {
+      "enthusiast": 1
+    },
+    "question_type_breakdown": {
+      "product_general": 1
+    },
+    "sample_questions": [
+      "Magnetic field resistance"
+    ],
+    "ticket_ids": [
+      "TKT-1046"
+    ]
+  }
+]

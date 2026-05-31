@@ -1,0 +1,16 @@
+You are labelling a cluster of customer questions to identify a unifying theme.
+
+## Cluster contents
+{questions}
+
+## Persona breakdown
+{persona_counts}
+
+## Your task
+Return STRICT JSON:
+{{
+  "theme_label": "<3-6 word theme label, title case>",
+  "theme_summary": "<one sentence describing what unifies these questions>",
+  "marketing_signal": "<one sentence: is this a marketing/product opportunity, or just operational? Why?>",
+  "suggested_action": "<one concrete suggestion: e.g. 'Add BPA-free badge to product pages', 'Build a sustainability landing page', 'Update FAQ with engraving font options'>"
+}}
