@@ -26,11 +26,19 @@ export function TicketDetailPage() {
 
   return (
     <div>
-      <Link to="/inbox" className="mb-4 inline-block text-xs text-[var(--muted)] hover:text-zinc-300">
-        ← back to inbox
-      </Link>
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <Link to="/inbox" className="inline-block text-xs text-[var(--muted)] hover:text-zinc-300">
+          ← back to inbox
+        </Link>
+        <Link
+          to={`/intelligence/${ticket.ticket_id}`}
+          className="text-xs text-amber-300 hover:text-amber-200"
+        >
+          view full intelligence record →
+        </Link>
+      </div>
       <SectionHeader
-        title={ticket.subject}
+        title={ticket.subject || "Customer ticket"}
         subtitle={`Ticket ${ticket.ticket_id} · ${ticket.channel} · ${ticket.date_received ?? ""}`}
       />
 
@@ -46,6 +54,13 @@ export function TicketDetailPage() {
           </Pill>
         ))}
       </div>
+
+      {ticket.message_body && (
+        <div className="mb-6 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-[var(--muted)]">Customer message</h3>
+          <p className="whitespace-pre-wrap text-sm text-zinc-200">{ticket.message_body}</p>
+        </div>
+      )}
 
       {reply?.route_reason && (
         <div className="mb-6 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
