@@ -50,6 +50,11 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ resolution }),
     }),
+  publishGap: (gapId: string, answer?: string) =>
+    request<{ gap: GapOut; published: boolean; chunk_key: string | null }>(
+      `/gaps/${gapId}/publish`,
+      { method: "POST", body: JSON.stringify({ answer: answer ?? null }) },
+    ),
   personas: () => request<PersonaOut[]>("/intelligence/personas"),
   summary: () => request<RunSummary>("/intelligence/summary"),
   impact: () => request<ImpactSummary>("/intelligence/impact"),

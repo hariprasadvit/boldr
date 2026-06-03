@@ -90,3 +90,15 @@ class ApprovalIn(BaseModel):
 class GapResolveIn(BaseModel):
     resolution: str
     resolved_by: str | None = None
+
+
+class GapPublishIn(BaseModel):
+    # Optional human answer; if omitted, the gap's auto-drafted FAQ entry is published.
+    answer: str | None = None
+    resolved_by: str | None = None
+
+
+class GapPublishOut(BaseModel):
+    gap: GapOut
+    published: bool
+    chunk_key: str | None = None

@@ -156,39 +156,35 @@ export function ReasoningPanel({
             )}
 
             {state?.route && (
-              <Section title="Backend learning update">
+              <Section title="What this ticket did for the system">
                 {state.route === "knowledge_gap" ? (
                   <div className="space-y-2 text-[11px] text-zinc-400">
                     <div className="flex items-center gap-2">
-                      <Pill color="violet">gaps sheet append</Pill>
+                      <Pill color="violet">logged as a gap</Pill>
                       <span>
-                        {state.gap_theme ?? "new theme"} logged with question, date, theme, persona, and
-                        staff-answer trigger.
+                        No good KB answer — saved as a knowledge gap{state.gap_theme ? ` (${state.gap_theme})` : ""}.
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Pill color="emerald">KB drafts sheet</Pill>
-                      <span>
-                        When staff provide the answer, n8n routes it to Claude for a Boldr-format KB draft.
-                      </span>
+                      <Pill color="emerald">FAQ auto-drafted</Pill>
+                      <span>The system wrote a draft answer — approve it in Gaps to publish it into the KB.</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Pill color="amber">campaign signal</Pill>
-                      <span>
-                        {state.buyer_persona ?? "persona"} demand is added to marketing intelligence.
-                      </span>
+                      <Pill color="amber">then reused</Pill>
+                      <span>Once published, the next customer asking this is answered automatically.</span>
                     </div>
                   </div>
                 ) : (
                   <div className="space-y-2 text-[11px] text-zinc-400">
                     <div className="flex items-center gap-2">
-                      <Pill color="emerald">KB reinforced</Pill>
-                      <span>Matched sources and confidence become retrieval quality signals.</span>
+                      <Pill color="emerald">saved for review</Pill>
+                      <span>This drafted reply is queued for a human to approve before it&apos;s sent.</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Pill color="amber">persona metric</Pill>
+                      <Pill color="amber">feeds your dashboards</Pill>
                       <span>
-                        {state.buyer_persona ?? "persona"} demand updates theme and campaign counts.
+                        Tagged {state.buyer_persona ?? "a persona"} — this ticket now counts toward Themes and
+                        Campaigns.
                       </span>
                     </div>
                   </div>

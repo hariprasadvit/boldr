@@ -7,8 +7,10 @@ import uuid
 from fastapi import APIRouter
 
 from app.api.deps import ApprovalServiceDep, SessionDep
+from app.core.exceptions import NotFoundError
 from app.repositories.gap_repo import GapRepository
-from app.schemas.resources import GapOut, GapResolveIn
+from app.schemas.resources import GapOut, GapPublishIn, GapPublishOut, GapResolveIn
+from app.services.kb_service import KbService
 
 router = APIRouter(prefix="/gaps", tags=["gaps"])
 
@@ -39,3 +41,25 @@ async def list_gaps(session: SessionDep, status: str = "open", limit: int = 200)
 async def resolve_gap(gap_id: uuid.UUID, body: GapResolveIn, service: ApprovalServiceDep) -> GapOut:
     gap = await service.resolve_gap(gap_id, body.resolution, resolved_by=body.resolved_by)
     return GapOut.model_validate(gap)
+
+
+@router.post("/{gap_id}/publish", response_model=GapPublishOut)
+async def publish_gap(
+    gap_id: uuid.UUID,
+    body: GapPublishIn,
+    service: ApprovalServiceDep,
+    session: SessionDep,
+) -> GapPublishOut:
+    """Approve & publish: resolve the gap AND write its answer into the live KB so
+    future similar tickets retrieve it automatically. This closes the loop."""
+    gap = await GapRepository(session).get(gap_id)
+    if not gap:
+        raise NotFoundError(f"gap {gap_id} not found")
+    answer = (body.answer or gap.kb_entry_draft or "").strip()
+    resolved = await service.resolve_gap(
+        gap_id, answer or "(published from auto-drafted FAQ)", resolved_by=body.resolved_by
+    )
+    chunk_key = await KbService(session).publish_resolved_gap(resolved)
+    return GapPublishOut(
+        gap=GapOut.model_validate(resolved), published=chunk_key is not None, chunk_key=chunk_key
+    )

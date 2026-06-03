@@ -32,6 +32,15 @@ async def replace_all(session: AsyncSession, rows: list[dict]) -> int:
     return len(rows)
 
 
+async def add_chunk(session: AsyncSession, row: dict) -> None:
+    """Upsert a single chunk by chunk_key — publishes a resolved gap into the live
+    KB without rebuilding everything. Re-publishing the same gap replaces its chunk."""
+    if row.get("chunk_key"):
+        await session.execute(delete(KbChunk).where(KbChunk.chunk_key == row["chunk_key"]))
+    session.add(KbChunk(**row))
+    await session.flush()
+
+
 async def search(session: AsyncSession, query_embedding: list[float], top_k: int) -> list[KbHit]:
     """Cosine-distance search, then re-rank by source-priority-adjusted score."""
     distance = KbChunk.embedding.cosine_distance(query_embedding).label("distance")

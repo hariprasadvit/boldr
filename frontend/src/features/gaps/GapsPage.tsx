@@ -1,9 +1,23 @@
+import { useState } from "react";
 import { api, apiUrl } from "@/api/client";
 import { EmptyState, Pill, SectionHeader } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
 
+type PubState = { status: "idle" | "publishing" | "done" | "error"; chunkKey?: string | null; error?: string };
+
 export function GapsPage() {
   const gaps = useAsync(() => api.listGaps("open"), []);
+  const [pub, setPub] = useState<Record<string, PubState>>({});
+
+  async function publish(gapId: string) {
+    setPub((p) => ({ ...p, [gapId]: { status: "publishing" } }));
+    try {
+      const r = await api.publishGap(gapId);
+      setPub((p) => ({ ...p, [gapId]: { status: "done", chunkKey: r.chunk_key } }));
+    } catch (e) {
+      setPub((p) => ({ ...p, [gapId]: { status: "error", error: (e as Error).message } }));
+    }
+  }
 
   if (gaps.loading) return <SectionHeader title="Knowledge gaps" subtitle="Loading…" />;
   const rows = gaps.data ?? [];
@@ -52,10 +66,11 @@ export function GapsPage() {
           <Pill>KB drafts approval sheet</Pill>
         </div>
         <p className="text-xs leading-relaxed text-[var(--muted)]">
-          This is the system loop: questions the KB cannot answer are logged with date, question, theme tag,
-          persona tag, confidence, and an <span className="text-zinc-300">Answer provided by staff</span>{" "}
-          column. In production, n8n watches that column; when staff fill it, Claude drafts a Boldr-format KB
-          entry into the KB drafts sheet for approval and publishing.
+          This is the self-improving loop: questions the KB can&apos;t answer are logged with theme, persona,
+          and confidence, and the system auto-drafts a FAQ entry. Click{" "}
+          <span className="text-emerald-300">Approve &amp; publish</span> and that answer is embedded into the
+          live knowledge base — so the next customer asking the same thing gets answered automatically, with a
+          citation back to this entry.
         </p>
       </div>
       <div className="space-y-4">
@@ -83,14 +98,24 @@ export function GapsPage() {
                 <pre className="mt-3 whitespace-pre-wrap font-mono text-[12px] leading-relaxed text-zinc-200">
                   {g.kb_entry_draft}
                 </pre>
-                <div className="mt-3 flex justify-end">
-                  <button
-                    disabled
-                    title="In production this writes the entry to the FAQ. Disabled in the demo."
-                    className="cursor-not-allowed rounded border border-emerald-800/50 bg-emerald-900/30 px-3 py-1 text-xs text-emerald-300 opacity-70"
-                  >
-                    ✓ Approve &amp; publish
-                  </button>
+                <div className="mt-3 flex items-center justify-end gap-3">
+                  {pub[g.id]?.status === "done" ? (
+                    <span className="text-[11px] text-emerald-300">
+                      ✓ Published to KB — future tickets answer from{" "}
+                      <span className="font-mono text-emerald-200">{pub[g.id]?.chunkKey}</span>
+                    </span>
+                  ) : pub[g.id]?.status === "error" ? (
+                    <span className="text-[11px] text-rose-300">Publish failed: {pub[g.id]?.error}</span>
+                  ) : (
+                    <button
+                      onClick={() => publish(g.id)}
+                      disabled={pub[g.id]?.status === "publishing"}
+                      title="Embeds this answer into the live KB so future tickets retrieve it."
+                      className="rounded border border-emerald-800/50 bg-emerald-900/30 px-3 py-1 text-xs text-emerald-300 transition-colors hover:border-emerald-600 hover:bg-emerald-900/50 disabled:opacity-50"
+                    >
+                      {pub[g.id]?.status === "publishing" ? "Publishing…" : "✓ Approve & publish"}
+                    </button>
+                  )}
                 </div>
               </details>
             )}

@@ -38,6 +38,35 @@ class KbService:
         ]
         return await store.replace_all(self.session, rows)
 
+    async def publish_resolved_gap(self, gap) -> str | None:
+        """Close the self-improving loop: embed a resolved gap's Q&A and insert it
+        into the live KB as a high-priority chunk, so future similar tickets
+        retrieve and cite it automatically. Returns the published chunk_key.
+
+        Prefers the human resolution; falls back to the auto-drafted FAQ entry.
+        """
+        answer = (getattr(gap, "resolution", None) or "").strip() or (
+            getattr(gap, "kb_entry_draft", None) or ""
+        ).strip()
+        if not answer:
+            return None
+
+        text = f"Q: {gap.paraphrase}\nA: {answer}"
+        chunk_key = f"faq::learned::{gap.id}"
+        await store.add_chunk(
+            self.session,
+            {
+                "chunk_key": chunk_key,
+                "source": "faq",  # FAQ-tier: cites cleanly and gets the priority boost
+                "section": gap.theme or "Learned",
+                "source_priority": 2,
+                "text": text,
+                "embedding": self.embedder.embed_one(text),
+                "meta": {"gap_id": str(gap.id), "theme": gap.theme, "kind": "gap"},
+            },
+        )
+        return chunk_key
+
     def build_retriever(self) -> Retriever:
         top_k = self.settings.KB_TOP_K
 
