@@ -35,6 +35,7 @@ class TicketState(TypedDict, total=False):
     # Reply
     reply_draft: str
     reply_citations: list[str]
+    open_items: list[dict]  # sub-questions the KB couldn't answer: [{question, reason}]
 
     # Gap
     gap_paraphrase: str

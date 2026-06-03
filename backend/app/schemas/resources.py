@@ -48,6 +48,9 @@ class InboxReplyOut(BaseModel):
     kb_confidence: float | None = None
     kb_top_source: str | None = None
     escalation_flags: list[str] = []
+    open_items: list[dict] = []
+    edited: bool = False
+    rating: str | None = None
 
 
 class GapOut(_ORM):
@@ -102,3 +105,22 @@ class GapPublishOut(BaseModel):
     gap: GapOut
     published: bool
     chunk_key: str | None = None
+
+
+class ReplyAnswerIn(BaseModel):
+    question: str
+    answer: str
+    teach: bool = True  # publish this answer into the KB
+
+
+class ReplyResolveIn(BaseModel):
+    final_body: str  # the composed/edited final email sent to the customer
+    answers: list[ReplyAnswerIn] = []  # filled-in open items
+    rating: str | None = None  # "useful" | "not_useful"
+    edited: bool = False  # was the draft edited before sending
+
+
+class ReplyResolveOut(BaseModel):
+    reply_id: uuid.UUID
+    status: str
+    taught: list[str] = []  # chunk_keys published to the KB

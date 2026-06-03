@@ -52,11 +52,13 @@ async def run(state: TicketState, config: RunnableConfig) -> TicketState:
         max_tokens=600,
     )
 
-    if "CITATIONS:" in text:
-        body, _, cite_str = text.rpartition("CITATIONS:")
+    # Split off OPEN_ITEMS first, then CITATIONS; the body is what remains.
+    rest, open_items = _parse_open_items(text)
+    if "CITATIONS:" in rest:
+        body, _, cite_str = rest.rpartition("CITATIONS:")
         raw = [c.strip() for c in cite_str.split(",") if c.strip() and c.strip().lower() != "none"]
     else:
-        body, raw = text, []
+        body, raw = rest, []
 
     valid = _valid_ids(hits)
     cites = [c for c in raw if c in valid]
@@ -67,4 +69,27 @@ async def run(state: TicketState, config: RunnableConfig) -> TicketState:
 
     state["reply_draft"] = body.strip()
     state["reply_citations"] = cites
+    state["open_items"] = open_items
+
+    # A reply with unanswered sub-questions must never auto-send — a human fills the
+    # open items first. Downgrade an auto_reply to human_review.
+    if open_items and state.get("route") == "auto_reply":
+        state["route"] = "human_review"
+        state["route_reason"] = f"{len(open_items)} open item(s) need human input before sending"
+
     return state
+
+
+def _parse_open_items(text: str) -> tuple[str, list[dict]]:
+    """Return (text_without_open_items, [{question, reason}, ...])."""
+    if "OPEN_ITEMS:" not in text:
+        return text, []
+    rest, _, open_str = text.rpartition("OPEN_ITEMS:")
+    items: list[dict] = []
+    for raw_line in open_str.splitlines():
+        line = raw_line.strip().lstrip("-•").strip()
+        if not line or line.lower() == "none":
+            continue
+        question, sep, reason = line.partition("|")
+        items.append({"question": question.strip(), "reason": reason.strip() if sep else ""})
+    return rest, items

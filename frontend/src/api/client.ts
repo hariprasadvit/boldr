@@ -39,6 +39,19 @@ export const api = {
   listTickets: () => request<TicketOut[]>("/tickets"),
   listReplies: (status?: string) =>
     request<ReplyOut[]>(`/tickets/replies${status ? `?status=${status}` : ""}`),
+  resolveReply: (
+    replyId: string,
+    payload: {
+      final_body: string;
+      answers: { question: string; answer: string; teach: boolean }[];
+      rating?: string | null;
+      edited?: boolean;
+    },
+  ) =>
+    request<{ reply_id: string; status: string; taught: string[] }>(
+      `/tickets/replies/${replyId}/resolve`,
+      { method: "POST", body: JSON.stringify(payload) },
+    ),
   decideReply: (replyId: string, decision: string) =>
     request<ReplyOut>(`/approvals/replies/${replyId}`, {
       method: "POST",

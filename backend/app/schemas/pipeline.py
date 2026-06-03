@@ -57,6 +57,7 @@ class PipelineResult(BaseModel):
     route_reason: str | None = None
     reply_draft: str | None = None
     reply_citations: list[str] = []
+    open_items: list[dict] = []
     gap_paraphrase: str | None = None
     gap_theme: str | None = None
     kb_entry_draft: str | None = None

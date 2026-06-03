@@ -45,6 +45,24 @@ class ApprovalService:
         )
         return reply
 
+    async def resolve_and_send(
+        self, reply_id: uuid.UUID, final_body: str, rating=None, edited: bool = False
+    ) -> Reply:
+        """Close a reviewed ticket: store the final email, mark it sent, and record
+        the feedback (edited / rating). Clears open items — they're resolved."""
+        reply = await self.replies.get(reply_id)
+        if not reply:
+            raise NotFoundError(f"reply {reply_id} not found")
+        reply.body = final_body
+        reply.status = "sent"
+        reply.edited = edited
+        reply.rating = rating
+        reply.open_items = []
+        await self.approvals.add(
+            Approval(target_type="reply", target_id=reply_id, decision="sent", comment=rating)
+        )
+        return reply
+
     async def resolve_gap(self, gap_id: uuid.UUID, resolution: str, resolved_by=None):
         gap = await self.gaps.get(gap_id)
         if not gap:

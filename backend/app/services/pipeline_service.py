@@ -110,6 +110,7 @@ class PipelineService:
                     body=final["reply_draft"],
                     citations=final.get("reply_citations", []),
                     status=status,
+                    open_items=final.get("open_items", []),
                 )
             )
         elif route == "knowledge_gap":
@@ -142,6 +143,7 @@ class PipelineService:
             route_reason=final.get("route_reason"),
             reply_draft=final.get("reply_draft"),
             reply_citations=final.get("reply_citations", []),
+            open_items=final.get("open_items", []),
             gap_paraphrase=final.get("gap_paraphrase"),
             gap_theme=final.get("gap_theme"),
             kb_entry_draft=final.get("kb_entry_draft"),

@@ -38,34 +38,43 @@ class KbService:
         ]
         return await store.replace_all(self.session, rows)
 
-    async def publish_resolved_gap(self, gap) -> str | None:
-        """Close the self-improving loop: embed a resolved gap's Q&A and insert it
-        into the live KB as a high-priority chunk, so future similar tickets
-        retrieve and cite it automatically. Returns the published chunk_key.
-
-        Prefers the human resolution; falls back to the auto-drafted FAQ entry.
-        """
-        answer = (getattr(gap, "resolution", None) or "").strip() or (
-            getattr(gap, "kb_entry_draft", None) or ""
-        ).strip()
-        if not answer:
+    async def publish_qa(
+        self, question: str, answer: str, *, chunk_key: str, section: str | None = None, meta: dict | None = None
+    ) -> str | None:
+        """Embed a Q&A pair and insert it into the live KB as a high-priority chunk,
+        so future similar tickets retrieve and cite it. Returns the chunk_key (or
+        None if there's nothing to publish). This is the loop's write-back."""
+        answer = (answer or "").strip()
+        if not answer or not (question or "").strip():
             return None
-
-        text = f"Q: {gap.paraphrase}\nA: {answer}"
-        chunk_key = f"faq::learned::{gap.id}"
+        text = f"Q: {question}\nA: {answer}"
         await store.add_chunk(
             self.session,
             {
                 "chunk_key": chunk_key,
                 "source": "faq",  # FAQ-tier: cites cleanly and gets the priority boost
-                "section": gap.theme or "Learned",
+                "section": section or "Learned",
                 "source_priority": 2,
                 "text": text,
                 "embedding": self.embedder.embed_one(text),
-                "meta": {"gap_id": str(gap.id), "theme": gap.theme, "kind": "gap"},
+                "meta": {"kind": "gap", "learned": True, **(meta or {})},
             },
         )
         return chunk_key
+
+    async def publish_resolved_gap(self, gap) -> str | None:
+        """Publish a resolved gap into the KB. Prefers the human resolution; falls
+        back to the auto-drafted FAQ entry."""
+        answer = (getattr(gap, "resolution", None) or "").strip() or (
+            getattr(gap, "kb_entry_draft", None) or ""
+        ).strip()
+        return await self.publish_qa(
+            gap.paraphrase,
+            answer,
+            chunk_key=f"faq::learned::{gap.id}",
+            section=gap.theme,
+            meta={"gap_id": str(gap.id), "theme": gap.theme},
+        )
 
     def build_retriever(self) -> Retriever:
         top_k = self.settings.KB_TOP_K

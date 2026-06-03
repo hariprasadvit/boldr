@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "@/api/client";
 import { EmptyState, Pill, RouteBadge, SectionHeader } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
+import type { OpenItem, ReplyOut } from "@/api/types";
 
 export function TicketDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -21,19 +23,14 @@ export function TicketDetailPage() {
     );
   }
   const reply = (replies.data ?? []).find((r) => r.ticket_id === id);
-  const flags = (reply?.escalation_flags ?? []).filter(Boolean);
-  const citations = (reply?.citations ?? []).filter(Boolean);
 
   return (
     <div>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <Link to="/inbox" className="inline-block text-xs text-[var(--muted)] hover:text-zinc-300">
+        <Link to="/inbox" className="text-xs text-[var(--muted)] hover:text-zinc-300">
           ← back to inbox
         </Link>
-        <Link
-          to={`/intelligence/${ticket.ticket_id}`}
-          className="text-xs text-amber-300 hover:text-amber-200"
-        >
+        <Link to={`/intelligence/${ticket.ticket_id}`} className="text-xs text-amber-300 hover:text-amber-200">
           view full intelligence record →
         </Link>
       </div>
@@ -47,8 +44,7 @@ export function TicketDetailPage() {
         {reply?.question_type && <Pill>type: {reply.question_type}</Pill>}
         {reply?.buyer_persona && <Pill color="amber">persona: {reply.buyer_persona}</Pill>}
         {reply?.kb_confidence != null && <Pill>KB confidence: {reply.kb_confidence.toFixed(2)}</Pill>}
-        {reply?.kb_top_source && <Pill>top source: {reply.kb_top_source}</Pill>}
-        {flags.map((f) => (
+        {(reply?.escalation_flags ?? []).filter(Boolean).map((f) => (
           <Pill key={f} color="rose">
             ⚠ {f}
           </Pill>
@@ -69,24 +65,192 @@ export function TicketDetailPage() {
         </div>
       )}
 
-      {reply?.body && (
-        <div className="mb-6 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
-          <h3 className="mb-3 text-sm font-medium text-zinc-100">Drafted reply</h3>
-          <pre className="whitespace-pre-wrap rounded bg-zinc-950/60 p-4 font-mono text-[12px] leading-relaxed text-zinc-200">
-            {reply.body}
-          </pre>
-          {citations.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1 text-[11px] text-[var(--muted)]">
-              <span>citations:</span>
-              {citations.map((c) => (
-                <span key={c} className="font-mono text-zinc-400">
-                  {c}
-                </span>
-              ))}
-            </div>
+      {reply &&
+        (reply.status === "draft" ? (
+          <ReviewWorkspace reply={reply} />
+        ) : (
+          <ResolvedView reply={reply} />
+        ))}
+    </div>
+  );
+}
+
+function ResolvedView({ reply }: { reply: ReplyOut }) {
+  const sent = reply.status === "sent";
+  return (
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
+      <div className="mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-medium text-zinc-100">{sent ? "Sent reply" : "Drafted reply"}</h3>
+        <Pill color={sent ? "emerald" : "zinc"}>{sent ? "resolved" : reply.status}</Pill>
+        {reply.edited && <span className="text-[11px] text-zinc-500">edited before sending</span>}
+        {reply.rating && (
+          <span className="text-[11px] text-zinc-400">{reply.rating === "useful" ? "👍 useful" : "👎 not useful"}</span>
+        )}
+      </div>
+      <pre className="whitespace-pre-wrap rounded bg-zinc-950/60 p-4 font-mono text-[12px] leading-relaxed text-zinc-200">
+        {reply.body}
+      </pre>
+      <Citations items={reply.citations} />
+    </div>
+  );
+}
+
+function Citations({ items }: { items: string[] }) {
+  const cites = (items ?? []).filter(Boolean);
+  if (!cites.length) return null;
+  return (
+    <div className="mt-3 flex flex-wrap gap-1 text-[11px] text-[var(--muted)]">
+      <span>citations:</span>
+      {cites.map((c) => (
+        <span key={c} className="font-mono text-zinc-400">
+          {c}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
+  const openItems: OpenItem[] = reply.open_items ?? [];
+  const [body, setBody] = useState(reply.body);
+  const [answers, setAnswers] = useState(openItems.map(() => ({ answer: "", teach: true })));
+  const [rating, setRating] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<{ status: string; taught: string[] } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  function setAnswer(i: number, patch: Partial<{ answer: string; teach: boolean }>) {
+    setAnswers((a) => a.map((x, j) => (j === i ? { ...x, ...patch } : x)));
+  }
+
+  function insertAnswers() {
+    const filled = openItems
+      .map((oi, i) => (answers[i].answer.trim() ? `${oi.question}: ${answers[i].answer.trim()}` : null))
+      .filter(Boolean);
+    if (filled.length) setBody((b) => `${b}\n\n${filled.join("\n\n")}`);
+  }
+
+  async function resolve() {
+    setBusy(true);
+    setError(null);
+    try {
+      const payload = {
+        final_body: body,
+        answers: openItems
+          .map((oi, i) => ({ question: oi.question, answer: answers[i].answer.trim(), teach: answers[i].teach }))
+          .filter((a) => a.answer),
+        rating,
+        edited: body !== reply.body,
+      };
+      const r = await api.resolveReply(reply.id, payload);
+      setResult({ status: r.status, taught: r.taught });
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (result) {
+    return (
+      <div className="rounded-lg border border-emerald-800/50 bg-emerald-950/20 p-5">
+        <div className="mb-2 text-sm font-medium text-emerald-200">✓ Sent &amp; ticket resolved</div>
+        <p className="text-xs text-zinc-300">
+          The final reply was sent to the customer and this ticket is now closed.
+          {result.taught.length > 0 && (
+            <>
+              {" "}
+              <span className="text-emerald-300">
+                {result.taught.length} answer{result.taught.length === 1 ? "" : "s"} taught to the KB
+              </span>{" "}
+              — future tickets asking the same thing will be answered automatically.
+            </>
           )}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-5">
+      {openItems.length > 0 && (
+        <div className="rounded-lg border border-amber-800/40 bg-amber-950/10 p-5">
+          <h3 className="mb-1 text-sm font-medium text-amber-200">
+            Needs your input · {openItems.length} open item{openItems.length === 1 ? "" : "s"}
+          </h3>
+          <p className="mb-4 text-xs text-[var(--muted)]">
+            The bot answered what the KB covers. These parts it couldn&apos;t ground — fill them in. Anything
+            you mark <span className="text-emerald-300">Teach KB</span> is published so the next customer is
+            answered automatically.
+          </p>
+          <div className="space-y-4">
+            {openItems.map((oi, i) => (
+              <div key={i} className="rounded border border-[var(--border)] bg-zinc-950/40 p-3">
+                <div className="mb-1 text-sm text-zinc-200">{oi.question}</div>
+                {oi.reason && <div className="mb-2 text-[11px] text-[var(--muted)]">why open: {oi.reason}</div>}
+                <textarea
+                  value={answers[i].answer}
+                  onChange={(e) => setAnswer(i, { answer: e.target.value })}
+                  placeholder="Type the answer…"
+                  rows={2}
+                  className="w-full resize-none rounded border border-[var(--border)] bg-zinc-950 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-amber-500 focus:outline-none"
+                />
+                <label className="mt-2 flex items-center gap-2 text-[11px] text-zinc-400">
+                  <input
+                    type="checkbox"
+                    checked={answers[i].teach}
+                    onChange={(e) => setAnswer(i, { teach: e.target.checked })}
+                  />
+                  Teach this answer to the KB (reused automatically next time)
+                </label>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={insertAnswers}
+            className="mt-3 text-[11px] text-amber-300 hover:text-amber-200"
+          >
+            + insert answers into the reply below
+          </button>
         </div>
       )}
+
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
+        <h3 className="mb-3 text-sm font-medium text-zinc-100">Reply to send</h3>
+        <textarea
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          rows={12}
+          className="w-full resize-y rounded bg-zinc-950/60 p-4 font-mono text-[12px] leading-relaxed text-zinc-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+        />
+        <Citations items={reply.citations} />
+
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-4">
+          <div className="flex items-center gap-2 text-[11px] text-[var(--muted)]">
+            <span>draft quality:</span>
+            <button
+              onClick={() => setRating(rating === "useful" ? null : "useful")}
+              className={`rounded border px-2 py-0.5 ${rating === "useful" ? "border-emerald-600 bg-emerald-900/30 text-emerald-300" : "border-[var(--border)] text-zinc-400"}`}
+            >
+              👍 useful
+            </button>
+            <button
+              onClick={() => setRating(rating === "not_useful" ? null : "not_useful")}
+              className={`rounded border px-2 py-0.5 ${rating === "not_useful" ? "border-rose-600 bg-rose-900/30 text-rose-300" : "border-[var(--border)] text-zinc-400"}`}
+            >
+              👎 needs work
+            </button>
+          </div>
+          <button
+            onClick={resolve}
+            disabled={busy || !body.trim()}
+            className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-zinc-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
+          >
+            {busy ? "Sending…" : "Resolve & send"}
+          </button>
+        </div>
+        {error && <div className="mt-2 text-[11px] text-rose-300">Failed: {error}</div>}
+      </div>
     </div>
   );
 }

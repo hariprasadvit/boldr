@@ -139,7 +139,12 @@ export type ReplyOut = {
   kb_confidence?: number | null;
   kb_top_source?: string | null;
   escalation_flags?: string[];
+  open_items?: OpenItem[];
+  edited?: boolean;
+  rating?: string | null;
 };
+
+export type OpenItem = { question: string; reason?: string };
 
 export type GapOut = {
   id: string;
