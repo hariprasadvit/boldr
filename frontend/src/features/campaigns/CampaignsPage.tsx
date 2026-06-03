@@ -1,5 +1,5 @@
 import { api } from "@/api/client";
-import { EmptyState, Pill, SectionHeader, Stat } from "@/components/ui";
+import { DerivedFrom, EmptyState, Pill, SectionHeader, Stat } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
 import { PERSONA_CAMPAIGNS, type PersonaCampaign } from "./campaigns";
 import type { ThemeCluster } from "@/api/types";
@@ -125,6 +125,9 @@ export function CampaignsPage() {
                     </div>
                     <div className="text-zinc-200">{theme.theme_label}</div>
                     <div className="mt-1">{theme.suggested_action}</div>
+                    <div className="mt-2">
+                      <DerivedFrom ticketIds={theme.ticket_ids} label="Generated from" max={8} />
+                    </div>
                   </div>
                 )}
               </div>

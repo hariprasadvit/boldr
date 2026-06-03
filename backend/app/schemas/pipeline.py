@@ -24,6 +24,27 @@ class KbHitOut(BaseModel):
     text: str
 
 
+class ConfidenceComponentOut(BaseModel):
+    key: str
+    label: str
+    value: float
+    weight: float
+    contribution: float
+    measured: bool
+
+
+class ConfidenceBreakdownOut(BaseModel):
+    components: list[ConfidenceComponentOut] = []
+    composite: float = 0.0
+
+
+class TicketCostOut(BaseModel):
+    input_tokens: int = 0
+    output_tokens: int = 0
+    usd: float = 0.0
+    llm_calls: int = 0
+
+
 class PipelineResult(BaseModel):
     ticket_id: str
     question_type: str | None = None
@@ -40,4 +61,6 @@ class PipelineResult(BaseModel):
     gap_theme: str | None = None
     kb_entry_draft: str | None = None
     kb_hits: list[KbHitOut] = []
+    confidence_breakdown: ConfidenceBreakdownOut | None = None
+    cost: TicketCostOut | None = None
     notes: list[str] = []

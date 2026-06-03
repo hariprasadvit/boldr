@@ -7,12 +7,15 @@ human-approval queue); novel questions become 'open' gaps.
 
 from __future__ import annotations
 
+from langchain_core.callbacks import get_usage_metadata_callback
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.agent.graph import compiled
 from app.agent.runtime import AgentDeps
 from app.agent.state import make_initial_state
 from app.core.config import get_settings
+from app.intelligence import confidence as confidence_mod
+from app.intelligence.economics import usd_for_tokens
 from app.llm.chat import get_chat_client
 from app.models.gap import Gap
 from app.models.reply import Reply
@@ -20,7 +23,13 @@ from app.models.run import Run
 from app.repositories.gap_repo import GapRepository
 from app.repositories.run_repo import ReplyRepository, RunRepository
 from app.repositories.ticket_repo import TicketRepository
-from app.schemas.pipeline import KbHitOut, PipelineResult, TicketInput
+from app.schemas.pipeline import (
+    ConfidenceBreakdownOut,
+    KbHitOut,
+    PipelineResult,
+    TicketCostOut,
+    TicketInput,
+)
 from app.services.kb_service import KbService
 
 
@@ -39,12 +48,30 @@ class PipelineService:
         data["ticket_id"] = ticket_id
 
         deps = AgentDeps(chat=self.chat, retrieve=KbService(self.session).build_retriever())
-        final = await compiled().ainvoke(
-            make_initial_state(data),
-            config={"configurable": {"deps": deps}},
-        )
+        # Capture real token usage across every LLM call in the graph run
+        # (classify / draft / gap), provider-agnostic, via LangChain's callback.
+        with get_usage_metadata_callback() as usage_cb:
+            final = await compiled().ainvoke(
+                make_initial_state(data),
+                config={"configurable": {"deps": deps}},
+            )
+        cost = self._cost_from_usage(usage_cb.usage_metadata)
         await self._persist(ticket_id, data, final)
-        return self._to_result(ticket_id, final)
+        return self._to_result(ticket_id, final, cost)
+
+    @staticmethod
+    def _cost_from_usage(usage_metadata: dict) -> TicketCostOut:
+        """Sum per-model usage from the callback into a single real cost figure."""
+        in_tok = sum(m.get("input_tokens", 0) for m in usage_metadata.values())
+        out_tok = sum(m.get("output_tokens", 0) for m in usage_metadata.values())
+        calls = sum(int(m.get("input_token_details", {}).get("calls", 0)) for m in usage_metadata.values())
+        return TicketCostOut(
+            input_tokens=in_tok,
+            output_tokens=out_tok,
+            usd=round(usd_for_tokens(in_tok, out_tok), 6),
+            # input_token_details rarely carries a call count; fall back to model count.
+            llm_calls=calls or len(usage_metadata),
+        )
 
     async def _persist(self, ticket_id: str, data: dict, final: dict) -> None:
         ticket = await self.tickets.upsert(
@@ -99,9 +126,12 @@ class PipelineService:
             )
 
     @staticmethod
-    def _to_result(ticket_id: str, final: dict) -> PipelineResult:
+    def _to_result(ticket_id: str, final: dict, cost: TicketCostOut | None = None) -> PipelineResult:
+        breakdown = ConfidenceBreakdownOut.model_validate(confidence_mod.from_state(final))
         return PipelineResult(
             ticket_id=ticket_id,
+            confidence_breakdown=breakdown,
+            cost=cost,
             question_type=final.get("question_type"),
             buyer_persona=final.get("buyer_persona"),
             escalation_flags=final.get("escalation_flags", []),

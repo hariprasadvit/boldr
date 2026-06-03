@@ -2,6 +2,8 @@
 import type {
   BenchRow,
   GapOut,
+  ImpactSummary,
+  IntelligenceRecord,
   PersonaOut,
   PipelineResult,
   ReplyOut,
@@ -50,6 +52,9 @@ export const api = {
     }),
   personas: () => request<PersonaOut[]>("/intelligence/personas"),
   summary: () => request<RunSummary>("/intelligence/summary"),
+  impact: () => request<ImpactSummary>("/intelligence/impact"),
+  record: (ticketId: string) =>
+    request<IntelligenceRecord>(`/intelligence/record/${encodeURIComponent(ticketId)}`),
   themes: () => request<{ clusters: ThemeCluster[] }>("/intelligence/themes"),
   marketingBrief: () => request<{ markdown: string }>("/intelligence/marketing-brief"),
   externalBench: () => request<{ markdown: string; data: BenchRow[] }>("/intelligence/external-bench"),

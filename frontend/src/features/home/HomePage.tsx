@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { api } from "@/api/client";
-import { Card, Pill, SectionHeader, Stat } from "@/components/ui";
+import { Card, ImpactStat, Pill, SectionHeader, usd } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
 import type { GapOut } from "@/api/types";
 
@@ -8,16 +8,15 @@ export function HomePage() {
   const summaryState = useAsync(() => api.summary(), []);
   const gaps = useAsync(() => api.listGaps("open"), []);
   const themesState = useAsync(() => api.themes(), []);
+  const impactState = useAsync(() => api.impact(), []);
 
   const summary = summaryState.data;
+  const impact = impactState.data;
   const gapList = gaps.data ?? [];
   const themes = (themesState.data?.clusters ?? []).filter((t) => t.size > 1);
   const loading = summaryState.loading || gaps.loading || themesState.loading;
 
   const ticketCount = summary?.tickets_processed ?? 0;
-  const autoReply = summary?.by_route?.auto_reply ?? 0;
-  const humanReview = summary?.by_route?.human_review ?? 0;
-  const autoReplyPct = ticketCount > 0 ? Math.round((autoReply / ticketCount) * 100) : 0;
   const gapCount = summary?.knowledge_gaps_detected ?? gapList.length;
 
   const questionTypeMix = summary?.by_question_type ?? {};
@@ -44,14 +43,69 @@ export function HomePage() {
         </div>
       ) : (
         <>
+          {/* Impact dashboard — business outcomes first (what changes next month). */}
+          <div className="mb-3 grid grid-cols-2 gap-3 md:grid-cols-4">
+            <ImpactStat
+              label="Hours saved"
+              value={`${(impact?.hours_saved ?? 0).toFixed(0)} hrs`}
+              hint={`${impact?.draft_assisted ?? 0} tickets draft-assisted`}
+              basis="assumption"
+              accent
+              formula={`${impact?.draft_assisted ?? 0} draft-assisted × ${(impact?.assumptions.minutes_per_reply_from_scratch ?? 8) - (impact?.assumptions.minutes_to_review_draft ?? 2)} min saved (${impact?.assumptions.minutes_per_reply_from_scratch ?? 8}min scratch − ${impact?.assumptions.minutes_to_review_draft ?? 2}min review) ÷ 60`}
+            />
+            <ImpactStat
+              label="Knowledge created"
+              value={impact?.new_knowledge_created ?? 0}
+              hint="FAQ entries drafted from gaps"
+              basis="real"
+              formula="Knowledge gaps with an auto-drafted FAQ entry queued for approval"
+            />
+            <ImpactStat
+              label="Product gaps found"
+              value={impact?.product_page_gaps ?? 0}
+              hint="themes pointing at product pages"
+              basis="real"
+              formula="Multi-ticket themes whose suggested action references a product page / badge / spec"
+            />
+            <ImpactStat
+              label="Marketing opportunities"
+              value={impact?.marketing_opportunities ?? 0}
+              hint="themes with a marketing signal"
+              basis="real"
+              formula="Multi-ticket themes carrying a non-empty marketing signal"
+            />
+          </div>
+
+          {/* Cost / ROI + automation mix — the cost-efficiency story. */}
           <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-            <Stat label="Tickets processed" value={ticketCount} />
-            <Stat label="Auto-replied" value={autoReply} hint={`${autoReplyPct}% of inbox`} />
-            <Stat label="Human review" value={humanReview} />
-            <Stat
-              label="Knowledge gaps"
-              value={gapCount}
-              hint={`${themes.length} clusters identified`}
+            <ImpactStat
+              label="Model cost"
+              value={usd(impact?.model_cost_usd ?? 0)}
+              hint={`${usd(impact?.avg_cost_per_ticket_usd ?? 0)} / ticket`}
+              basis="derived"
+              formula={`Σ tokens × price (in $${impact?.assumptions.price_per_m_input_usd ?? 3}/M, out $${impact?.assumptions.price_per_m_output_usd ?? 15}/M). Batch estimated; live runs report exact usage.`}
+            />
+            <ImpactStat
+              label="Human cost saved"
+              value={usd(impact?.human_cost_saved_usd ?? 0)}
+              hint={`@ $${impact?.assumptions.loaded_hourly_rate_usd ?? 18}/hr loaded`}
+              basis="assumption"
+              formula={`${(impact?.hours_saved ?? 0).toFixed(1)} hrs × $${impact?.assumptions.loaded_hourly_rate_usd ?? 18}/hr loaded agent cost`}
+            />
+            <ImpactStat
+              label="ROI"
+              value={`${(impact?.roi_multiple ?? 0).toFixed(0)}×`}
+              hint="human cost saved ÷ model cost"
+              basis="derived"
+              accent
+              formula="Human cost saved ÷ model cost — every $1 of model spend offsets this much agent time"
+            />
+            <ImpactStat
+              label="Auto-approved"
+              value={impact?.auto_approved ?? 0}
+              hint={`${gapCount} gaps · ${ticketCount} processed`}
+              basis="real"
+              formula="Tickets routed auto_reply (KB confidence ≥ 0.72, no safety flag). The rest are draft-assisted for human review."
             />
           </div>
 

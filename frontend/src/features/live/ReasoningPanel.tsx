@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Pill, RouteBadge } from "@/components/ui";
+import { ConfidenceBar, Pill, RouteBadge, RoutingLegend, matchFiredRule, usd } from "@/components/ui";
 import type { PipelineResult } from "@/api/types";
 
 export type Stage = "classify" | "search" | "route" | "draft" | "learn";
@@ -115,12 +115,22 @@ export function ReasoningPanel({
               </Section>
             )}
 
+            {state?.confidence_breakdown && (
+              <Section title="Confidence breakdown">
+                <ConfidenceBar
+                  components={state.confidence_breakdown.components}
+                  composite={state.confidence_breakdown.composite}
+                />
+              </Section>
+            )}
+
             {state?.route && (
               <Section title="Route decision">
-                <div className="mb-1">
+                <div className="mb-2 flex items-center gap-2">
                   <RouteBadge route={state.route} />
+                  <span className="text-[11px] text-zinc-400">{state.route_reason}</span>
                 </div>
-                <div className="text-[11px] text-zinc-400">{state.route_reason}</div>
+                <RoutingLegend firedId={matchFiredRule(state.route_reason ?? "", state.route)} />
               </Section>
             )}
 
@@ -183,6 +193,17 @@ export function ReasoningPanel({
                     </div>
                   </div>
                 )}
+              </Section>
+            )}
+
+            {state?.cost && state.cost.input_tokens > 0 && (
+              <Section title="Cost (measured)">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-zinc-400">
+                  <span className="font-mono text-sm font-semibold text-emerald-300">{usd(state.cost.usd)}</span>
+                  <span>{state.cost.input_tokens.toLocaleString()} tokens in</span>
+                  <span>{state.cost.output_tokens.toLocaleString()} out</span>
+                  <span className="text-zinc-600">real usage</span>
+                </div>
               </Section>
             )}
           </>

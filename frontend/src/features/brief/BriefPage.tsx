@@ -1,10 +1,15 @@
 import { api, apiUrl } from "@/api/client";
 import { Markdown } from "@/components/Markdown";
-import { EmptyState, Pill, SectionHeader } from "@/components/ui";
+import { DerivedFrom, EmptyState, Pill, SectionHeader } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
 
 export function BriefPage() {
   const state = useAsync(() => api.marketingBrief(), []);
+  const themesState = useAsync(() => api.themes(), []);
+  const evidenceThemes = (themesState.data?.clusters ?? [])
+    .filter((t) => t.size >= 2)
+    .sort((a, b) => b.size - a.size)
+    .slice(0, 8);
 
   if (state.loading) return <SectionHeader title="Marketing brief" subtitle="Loading…" />;
   const md = state.data?.markdown ?? "";
@@ -42,6 +47,25 @@ export function BriefPage() {
           knowledge-gap drafts, and the five-persona reference taxonomy.
         </p>
       </div>
+      {evidenceThemes.length > 0 && (
+        <div className="mb-6 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
+          <h3 className="mb-1 text-sm font-medium text-zinc-100">Evidence ledger</h3>
+          <p className="mb-4 text-xs text-[var(--muted)]">
+            Every recommendation below traces to real tickets — nothing here is hand-authored.
+          </p>
+          <div className="space-y-3">
+            {evidenceThemes.map((t) => (
+              <div key={t.cluster_id} className="border-t border-[var(--border)] pt-3 first:border-t-0 first:pt-0">
+                <div className="mb-1.5 flex items-center gap-2">
+                  <span className="text-sm text-zinc-200">{t.theme_label}</span>
+                  <Pill color="amber">{t.size} tickets</Pill>
+                </div>
+                <DerivedFrom ticketIds={t.ticket_ids} max={12} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <Markdown md={md} />
     </div>
   );

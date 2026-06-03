@@ -35,7 +35,81 @@ export type PipelineResult = {
   gap_theme?: string;
   kb_entry_draft?: string;
   kb_hits?: KbHit[];
+  confidence_breakdown?: ConfidenceBreakdown;
+  cost?: TicketCost;
   notes?: string[];
+};
+
+export type ConfidenceComponent = {
+  key: string;
+  label: string;
+  value: number;
+  weight: number;
+  contribution: number;
+  measured: boolean;
+};
+
+export type ConfidenceBreakdown = {
+  components: ConfidenceComponent[];
+  composite: number;
+};
+
+export type TicketCost = {
+  input_tokens: number;
+  output_tokens: number;
+  usd: number;
+  llm_calls: number;
+};
+
+export type ImpactSummary = {
+  tickets_processed: number;
+  auto_approved: number;
+  draft_assisted: number;
+  knowledge_gaps: number;
+  new_knowledge_created: number;
+  product_page_gaps: number;
+  marketing_opportunities: number;
+  hours_saved: number;
+  human_cost_saved_usd: number;
+  model_cost_usd: number;
+  roi_multiple: number;
+  avg_cost_per_ticket_usd: number;
+  assumptions: {
+    minutes_per_reply_from_scratch: number;
+    minutes_to_review_draft: number;
+    loaded_hourly_rate_usd: number;
+    price_per_m_input_usd: number;
+    price_per_m_output_usd: number;
+  };
+};
+
+export type IntelligenceRecord = {
+  ticket: {
+    ticket_id: string;
+    subject: string;
+    channel: string;
+    message_body: string;
+    date_received?: string | null;
+  };
+  run?: {
+    question_type?: string | null;
+    buyer_persona?: string | null;
+    escalation_flags: string[];
+    kb_confidence?: number | null;
+    kb_top_source?: string | null;
+    route?: string | null;
+    route_reason?: string | null;
+  } | null;
+  reply?: { body: string; citations: string[]; status: string } | null;
+  gap?: {
+    paraphrase: string;
+    theme?: string | null;
+    status: string;
+    kb_entry_draft?: string | null;
+  } | null;
+  confidence_breakdown?: ConfidenceBreakdown | null;
+  themes: ThemeCluster[];
+  cost_estimate_usd: number;
 };
 
 export type TicketOut = {

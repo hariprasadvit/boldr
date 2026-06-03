@@ -1,5 +1,5 @@
 import { api } from "@/api/client";
-import { EmptyState, Pill, SectionHeader } from "@/components/ui";
+import { DerivedFrom, EmptyState, Pill, SectionHeader } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
 
 export function ThemesPage() {
@@ -60,6 +60,9 @@ export function ThemesPage() {
                   {p} · {c}
                 </Pill>
               ))}
+            </div>
+            <div className="mb-3">
+              <DerivedFrom ticketIds={t.ticket_ids} max={12} />
             </div>
             <details>
               <summary className="cursor-pointer text-xs text-[var(--muted)] hover:text-zinc-300">

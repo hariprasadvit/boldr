@@ -7,6 +7,7 @@ import { BriefPage } from "./features/brief/BriefPage";
 import { CampaignsPage } from "./features/campaigns/CampaignsPage";
 import { GapsPage } from "./features/gaps/GapsPage";
 import { HomePage } from "./features/home/HomePage";
+import { RecordPage } from "./features/intelligence/RecordPage";
 import { TicketDetailPage } from "./features/inbox/TicketDetailPage";
 import { InboxPage } from "./features/inbox/InboxPage";
 import { LivePage } from "./features/live/LivePage";
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "live", element: <LivePage /> },
       { path: "inbox", element: <InboxPage /> },
       { path: "inbox/:id", element: <TicketDetailPage /> },
+      { path: "intelligence/:ticketId", element: <RecordPage /> },
       { path: "gaps", element: <GapsPage /> },
       { path: "themes", element: <ThemesPage /> },
       { path: "campaigns", element: <CampaignsPage /> },
