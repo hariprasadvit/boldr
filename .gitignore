@@ -11,3 +11,6 @@ outputs/*.md
 outputs/*.log
 outputs/kb_drafts/*
 !outputs/.gitkeep
+
+# Internal judge-prep notes — keep local, never commit
+docs/JUDGE_QA.md
