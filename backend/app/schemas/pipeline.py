@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 class TicketInput(BaseModel):
     ticket_id: str | None = None
-    customer_name: str = "Sample Customer"
+    customer_name: str = ""  # empty -> the draft greets "Hi there" instead of a fake name
     customer_email: str = "live@example.com"
     order_id: str = ""
     channel: str = "email"
