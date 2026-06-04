@@ -124,3 +124,18 @@ class ReplyResolveOut(BaseModel):
     reply_id: uuid.UUID
     status: str
     taught: list[str] = []  # chunk_keys published to the KB
+
+
+class ComposeAnswerIn(BaseModel):
+    question: str
+    answer: str
+
+
+class ComposeReplyIn(BaseModel):
+    draft: str
+    answers: list[ComposeAnswerIn] = []
+    channel: str = "email"
+
+
+class ComposeReplyOut(BaseModel):
+    body: str

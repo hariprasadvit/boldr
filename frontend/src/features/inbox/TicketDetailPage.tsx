@@ -116,41 +116,57 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
   const [answers, setAnswers] = useState(openItems.map(() => ({ answer: "", teach: true, skip: false })));
   const [rating, setRating] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [composing, setComposing] = useState(false);
+  // True once `body` reflects the current answers (set after a redraft, cleared
+  // when an answer changes) — so we never send a reply that omits an answer.
+  const [incorporated, setIncorporated] = useState(false);
   const [result, setResult] = useState<{ status: string; taught: string[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   function setAnswer(i: number, patch: Partial<{ answer: string; teach: boolean; skip: boolean }>) {
     setAnswers((a) => a.map((x, j) => (j === i ? { ...x, ...patch } : x)));
+    if (patch.answer !== undefined || patch.skip !== undefined) setIncorporated(false);
   }
 
-  // An item is "handled" once it's answered or explicitly skipped. You can't send
-  // until every open item is handled — no sending while inputs are still pending.
-  const pending = openItems.filter((_, i) => !answers[i].answer.trim() && !answers[i].skip).length;
-  const canSend = !busy && !!body.trim() && pending === 0;
-  // Live preview of what the customer actually receives — draft + merged answers.
-  const composed = mergeAnswers(body);
+  const filledAnswers = openItems
+    .map((oi, i) => ({ question: oi.question, answer: answers[i].answer.trim(), teach: answers[i].teach, skip: answers[i].skip }))
+    .filter((a) => a.answer && !a.skip);
 
-  // Append any answered item whose text isn't already in the body (so a typed
-  // answer can't silently get dropped from the email). Skipped items are omitted.
-  function mergeAnswers(base: string): string {
-    const additions = openItems
-      .map((_, i) => (answers[i].answer.trim() && !answers[i].skip ? answers[i].answer.trim() : null))
-      .filter((a): a is string => !!a && !base.includes(a));
-    return additions.length ? `${base}\n\n${additions.join("\n\n")}` : base;
+  // An item is "handled" once it's answered or explicitly skipped.
+  const pending = openItems.filter((_, i) => !answers[i].answer.trim() && !answers[i].skip).length;
+  const needsRedraft = filledAnswers.length > 0 && !incorporated;
+  const canSend = !busy && !!body.trim() && pending === 0 && !needsRedraft;
+
+  // Redraft: ask the model to rewrite the grounded draft + answers into one clean
+  // email (woven in, not appended). Always composes from the original grounded
+  // draft so repeated redrafts stay idempotent.
+  async function redraft() {
+    setComposing(true);
+    setError(null);
+    try {
+      const r = await api.composeReply({
+        draft: reply.body,
+        answers: filledAnswers.map((a) => ({ question: a.question, answer: a.answer })),
+        channel: reply.channel,
+      });
+      setBody(r.body);
+      setIncorporated(true);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setComposing(false);
+    }
   }
 
   async function resolve() {
     setBusy(true);
     setError(null);
     try {
-      const finalBody = mergeAnswers(body); // safety net: answers always reach the customer
       const payload = {
-        final_body: finalBody,
-        answers: openItems
-          .map((oi, i) => ({ question: oi.question, answer: answers[i].answer.trim(), teach: answers[i].teach }))
-          .filter((a, i) => a.answer && !answers[i].skip),
+        final_body: body,
+        answers: filledAnswers.map((a) => ({ question: a.question, answer: a.answer, teach: a.teach })),
         rating,
-        edited: finalBody !== reply.body,
+        edited: body !== reply.body,
       };
       const r = await api.resolveReply(reply.id, payload);
       setResult({ status: r.status, taught: r.taught });
@@ -248,37 +264,39 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
               );
             })}
           </div>
+          {filledAnswers.length > 0 && (
+            <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-amber-900/30 pt-3">
+              <button
+                onClick={redraft}
+                disabled={composing}
+                className="rounded-md border border-violet-700/60 bg-violet-900/30 px-3 py-1.5 text-xs font-medium text-violet-200 transition-colors hover:bg-violet-900/50 disabled:opacity-50"
+              >
+                {composing ? "Redrafting…" : incorporated ? "↻ Redraft again" : "✨ Redraft reply with your answers"}
+              </button>
+              <span className="text-[11px] text-[var(--muted)]">
+                {incorporated
+                  ? "answers woven into the reply below ✓"
+                  : "rewrites the email to weave your answers in naturally"}
+              </span>
+            </div>
+          )}
         </div>
       )}
 
       <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
         <div className="mb-3 flex items-baseline justify-between gap-2">
-          <h3 className="text-sm font-medium text-zinc-100">
-            {openItems.length > 0 ? "Grounded draft (editable)" : "Reply to send"}
-          </h3>
-          {openItems.length > 0 && (
-            <span className="text-[11px] text-[var(--muted)]">your answers are added below ↓</span>
+          <h3 className="text-sm font-medium text-zinc-100">Reply to send</h3>
+          {needsRedraft && (
+            <span className="text-[11px] text-violet-300">↑ redraft to include your answers</span>
           )}
         </div>
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          rows={openItems.length > 0 ? 8 : 12}
+          rows={12}
           className="w-full resize-y rounded bg-zinc-950/60 p-4 font-mono text-[12px] leading-relaxed text-zinc-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
         />
         <Citations items={reply.citations} />
-
-        {composed !== body && (
-          <div className="mt-4">
-            <div className="mb-1 flex items-center gap-2 text-[11px] uppercase tracking-wider text-emerald-300">
-              Final reply — what the customer receives
-              <span className="rounded bg-emerald-900/30 px-1 text-[9px] normal-case">live</span>
-            </div>
-            <pre className="whitespace-pre-wrap rounded border border-emerald-900/40 bg-emerald-950/10 p-4 font-mono text-[12px] leading-relaxed text-zinc-100">
-              {composed}
-            </pre>
-          </div>
-        )}
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-4">
           <div className="flex items-center gap-2 text-[11px] text-[var(--muted)]">
@@ -297,15 +315,17 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
             </button>
           </div>
           <div className="flex items-center gap-3">
-            {pending > 0 && (
+            {pending > 0 ? (
               <span className="text-[11px] text-amber-300">
                 Answer or skip {pending} open item{pending === 1 ? "" : "s"} to send
               </span>
-            )}
+            ) : needsRedraft ? (
+              <span className="text-[11px] text-violet-300">Redraft to include your answers, then send</span>
+            ) : null}
             <button
               onClick={resolve}
               disabled={!canSend}
-              title={pending > 0 ? "Handle all open items first" : "Send the reply and close the ticket"}
+              title={!canSend ? "Handle open items and redraft first" : "Send the reply and close the ticket"}
               className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-zinc-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {busy ? "Sending…" : "Resolve & send"}

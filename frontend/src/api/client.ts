@@ -52,6 +52,15 @@ export const api = {
       `/tickets/replies/${replyId}/resolve`,
       { method: "POST", body: JSON.stringify(payload) },
     ),
+  composeReply: (payload: {
+    draft: string;
+    answers: { question: string; answer: string }[];
+    channel?: string;
+  }) =>
+    request<{ body: string }>("/tickets/compose-reply", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
   decideReply: (replyId: string, decision: string) =>
     request<ReplyOut>(`/approvals/replies/${replyId}`, {
       method: "POST",

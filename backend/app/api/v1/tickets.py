@@ -7,12 +7,30 @@ import uuid
 from fastapi import APIRouter
 
 from app.api.deps import ApprovalServiceDep, SessionDep
+from app.llm.chat import get_chat_client
 from app.repositories.run_repo import ReplyRepository, RunRepository
 from app.repositories.ticket_repo import TicketRepository
-from app.schemas.resources import InboxReplyOut, ReplyResolveIn, ReplyResolveOut, TicketOut
+from app.schemas.resources import (
+    ComposeReplyIn,
+    ComposeReplyOut,
+    InboxReplyOut,
+    ReplyResolveIn,
+    ReplyResolveOut,
+    TicketOut,
+)
 from app.services.kb_service import KbService
 
 router = APIRouter(prefix="/tickets", tags=["tickets"])
+
+_COMPOSE_SYSTEM = (
+    "You are a Boldr CS agent. You are given a partial drafted reply and a few "
+    "additional answers the human reviewer supplied for parts the draft left open. "
+    "Rewrite everything into ONE cohesive, brand-voice email that weaves the answers "
+    "in naturally where they belong — do not just append them. Friendly but premium, "
+    "direct, no padding. Keep the 'Hi ...' greeting and the '— Team Boldr' sign-off. "
+    "Use ONLY facts from the draft and the provided answers; invent nothing. Output "
+    "only the email body."
+)
 
 
 @router.get("", response_model=list[TicketOut])
@@ -73,6 +91,23 @@ async def resolve_reply(
             if ck:
                 taught.append(ck)
     return ReplyResolveOut(reply_id=reply_id, status=reply.status, taught=taught)
+
+
+@router.post("/compose-reply", response_model=ComposeReplyOut)
+async def compose_reply(body: ComposeReplyIn) -> ComposeReplyOut:
+    """Redraft: rewrite the grounded draft + the reviewer's answers into one clean
+    brand-voice email (so answers are woven in, not appended raw)."""
+    if not body.answers:
+        return ComposeReplyOut(body=body.draft)
+    answers = "\n".join(f"- Q: {a.question}\n  A: {a.answer}" for a in body.answers)
+    user = (
+        f"Channel: {body.channel}\n\n"
+        f"<current_draft>\n{body.draft}\n</current_draft>\n\n"
+        f"<reviewer_answers>\n{answers}\n</reviewer_answers>\n\n"
+        "Rewrite into one cohesive email incorporating the answers."
+    )
+    text = get_chat_client().complete(_COMPOSE_SYSTEM, user, max_tokens=600)
+    return ComposeReplyOut(body=text.strip())
 
 
 @router.get("/runs/count")
