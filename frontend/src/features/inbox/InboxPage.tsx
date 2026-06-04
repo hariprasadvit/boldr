@@ -7,18 +7,18 @@ import type { ReplyOut } from "@/api/types";
 
 type Tab = { key: string; label: string; match: (r: ReplyOut) => boolean };
 
-// The inbox as a work queue: a ticket's reply status IS its lifecycle.
+// The inbox as a work queue: a ticket's reply status IS its lifecycle. Every reply
+// is human-reviewed before sending, so the queue is Needs review -> Resolved.
 const TABS: Tab[] = [
-  { key: "needs_review", label: "Needs review", match: (r) => r.status === "draft" },
+  { key: "needs_review", label: "Needs review", match: (r) => r.status === "draft" || r.status === "approved" },
   { key: "resolved", label: "Resolved", match: (r) => r.status === "sent" },
-  { key: "auto", label: "Auto-handled", match: (r) => r.status === "approved" },
   { key: "all", label: "All", match: () => true },
 ];
 
 const STATUS_LABEL: Record<string, { text: string; color: string }> = {
   draft: { text: "needs review", color: "amber" },
   sent: { text: "resolved", color: "emerald" },
-  approved: { text: "auto", color: "zinc" },
+  approved: { text: "needs review", color: "amber" },
   rejected: { text: "rejected", color: "rose" },
 };
 

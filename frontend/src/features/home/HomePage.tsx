@@ -101,11 +101,11 @@ export function HomePage() {
               formula="Human cost saved ÷ model cost — every $1 of model spend offsets this much agent time"
             />
             <ImpactStat
-              label="Auto-approved"
-              value={impact?.auto_approved ?? 0}
-              hint={`${gapCount} gaps · ${ticketCount} processed`}
+              label="Human-reviewed"
+              value="100%"
+              hint={`${impact?.draft_assisted ?? 0} AI-drafted · ${ticketCount} processed`}
               basis="real"
-              formula="Tickets routed auto_reply (KB confidence ≥ 0.72, no safety flag). The rest are draft-assisted for human review."
+              formula="Every reply is AI-drafted and approved by a human before sending — no auto-send. Confidence sets review effort, not whether a human is involved."
             />
           </div>
 

@@ -246,14 +246,16 @@ type RoutingRule = {
   shownAs: string;
 };
 
+// Policy: every reply is human-reviewed before sending — confidence sets the
+// review effort, never an auto-send. Rows differ only in why + how much scrutiny.
 const ROUTING_RULES: RoutingRule[] = [
-  { id: "hard_flag", condition: "Hard escalation flag (safety, refund, liability…)", route: "human_review", shownAs: "Safety / liability → human" },
-  { id: "order_status", condition: "question_type = order_status", route: "human_review", shownAs: "Policy (SOP §5) → human" },
-  { id: "liability_pair", condition: "health_conscious asking materials_safety", route: "human_review", shownAs: "Liability pair → human" },
-  { id: "low_intent", condition: "classification confidence < 0.55", route: "human_review", shownAs: "Low intent certainty → human" },
-  { id: "gap", condition: "KB confidence < 0.50", route: "knowledge_gap", shownAs: "Novel → learning loop" },
-  { id: "high", condition: "KB confidence ≥ 0.72", route: "auto_reply", shownAs: "High confidence → auto" },
-  { id: "soft", condition: "KB confidence 0.50–0.72", route: "human_review", shownAs: "Draft for human" },
+  { id: "hard_flag", condition: "Hard escalation flag (safety, refund, liability…)", route: "human_review", shownAs: "Safety / liability → careful review" },
+  { id: "order_status", condition: "question_type = order_status", route: "human_review", shownAs: "Policy (SOP §5) → review" },
+  { id: "liability_pair", condition: "health_conscious asking materials_safety", route: "human_review", shownAs: "Liability pair → careful review" },
+  { id: "low_intent", condition: "classification confidence < 0.55", route: "human_review", shownAs: "Low intent certainty → review" },
+  { id: "gap", condition: "KB confidence < 0.50", route: "knowledge_gap", shownAs: "Novel → answer + teach KB" },
+  { id: "high", condition: "KB confidence ≥ 0.72", route: "human_review", shownAs: "High-confidence draft → quick approve" },
+  { id: "soft", condition: "KB confidence 0.50–0.72", route: "human_review", shownAs: "Draft → human review" },
 ];
 
 /** Maps a route_reason string to the rule that fired (best-effort substring match). */
@@ -280,6 +282,9 @@ export function RoutingLegend({ firedId }: { firedId?: string | null }) {
   };
   return (
     <div className="overflow-hidden rounded-lg border border-[var(--border)]">
+      <div className="border-b border-[var(--border)] bg-zinc-900/40 px-3 py-1.5 text-[10px] text-emerald-300/90">
+        🛡 Every reply is human-reviewed before sending — confidence sets the review effort, not an auto-send.
+      </div>
       <table className="w-full text-left text-[11px]">
         <thead className="bg-zinc-900/60 text-[var(--muted)]">
           <tr>

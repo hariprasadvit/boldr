@@ -1,4 +1,9 @@
-"""Route node: auto_reply vs human_review vs knowledge_gap. Pure business logic (no I/O)."""
+"""Route node: human_review vs knowledge_gap. Pure business logic (no I/O).
+
+Policy: every reply is human-reviewed before sending — there is no auto-send path.
+KB confidence sets the review effort (high = quick approve), and very low confidence
+routes to knowledge_gap (the reviewer answers it and teaches the KB).
+"""
 
 from __future__ import annotations
 
@@ -42,12 +47,18 @@ def run(state: TicketState, config: RunnableConfig | None = None) -> TicketState
     if cls_conf < MIN_CLASSIFICATION_CONFIDENCE:
         return _route(state, "human_review", f"classification confidence {cls_conf:.2f} too low")
     if confidence < GAP_THRESHOLD:
-        return _route(state, "knowledge_gap", f"KB confidence {confidence:.2f} < {GAP_THRESHOLD}")
+        return _route(
+            state, "knowledge_gap", f"KB confidence {confidence:.2f} < {GAP_THRESHOLD} — novel, needs an answer"
+        )
+    # Policy: every reply is human-reviewed before sending. Confidence sets the
+    # review effort (high = quick approve), never an auto-send.
     if confidence >= HIGH_CONFIDENCE:
-        return _route(state, "auto_reply", f"KB confidence {confidence:.2f} ≥ {HIGH_CONFIDENCE}")
-    return _route(
-        state, "human_review", f"KB confidence {confidence:.2f} in soft band — draft for human"
-    )
+        return _route(
+            state,
+            "human_review",
+            f"KB confidence {confidence:.2f} ≥ {HIGH_CONFIDENCE} — high-confidence draft, quick review",
+        )
+    return _route(state, "human_review", f"KB confidence {confidence:.2f} — draft for human review")
 
 
 def _route(state: TicketState, route: str, reason: str) -> TicketState:
