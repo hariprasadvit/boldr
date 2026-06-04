@@ -127,11 +127,8 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
   // until every open item is handled — no sending while inputs are still pending.
   const pending = openItems.filter((_, i) => !answers[i].answer.trim() && !answers[i].skip).length;
   const canSend = !busy && !!body.trim() && pending === 0;
-
-  function insertAnswers() {
-    const merged = mergeAnswers(body);
-    if (merged !== body) setBody(merged);
-  }
+  // Live preview of what the customer actually receives — draft + merged answers.
+  const composed = mergeAnswers(body);
 
   // Append any answered item whose text isn't already in the body (so a typed
   // answer can't silently get dropped from the email). Skipped items are omitted.
@@ -251,21 +248,37 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
               );
             })}
           </div>
-          <button onClick={insertAnswers} className="mt-3 text-[11px] text-amber-300 hover:text-amber-200">
-            + preview answers in the reply below
-          </button>
         </div>
       )}
 
       <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
-        <h3 className="mb-3 text-sm font-medium text-zinc-100">Reply to send</h3>
+        <div className="mb-3 flex items-baseline justify-between gap-2">
+          <h3 className="text-sm font-medium text-zinc-100">
+            {openItems.length > 0 ? "Grounded draft (editable)" : "Reply to send"}
+          </h3>
+          {openItems.length > 0 && (
+            <span className="text-[11px] text-[var(--muted)]">your answers are added below ↓</span>
+          )}
+        </div>
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          rows={12}
+          rows={openItems.length > 0 ? 8 : 12}
           className="w-full resize-y rounded bg-zinc-950/60 p-4 font-mono text-[12px] leading-relaxed text-zinc-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
         />
         <Citations items={reply.citations} />
+
+        {composed !== body && (
+          <div className="mt-4">
+            <div className="mb-1 flex items-center gap-2 text-[11px] uppercase tracking-wider text-emerald-300">
+              Final reply — what the customer receives
+              <span className="rounded bg-emerald-900/30 px-1 text-[9px] normal-case">live</span>
+            </div>
+            <pre className="whitespace-pre-wrap rounded border border-emerald-900/40 bg-emerald-950/10 p-4 font-mono text-[12px] leading-relaxed text-zinc-100">
+              {composed}
+            </pre>
+          </div>
+        )}
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-4">
           <div className="flex items-center gap-2 text-[11px] text-[var(--muted)]">
