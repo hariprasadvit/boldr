@@ -17,7 +17,6 @@ export function HomePage() {
   const loading = summaryState.loading || gaps.loading || themesState.loading;
 
   const ticketCount = summary?.tickets_processed ?? 0;
-  const gapCount = summary?.knowledge_gaps_detected ?? gapList.length;
 
   const questionTypeMix = summary?.by_question_type ?? {};
   const personaMix = summary?.by_persona ?? {};
