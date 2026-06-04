@@ -157,7 +157,7 @@ unbounded and corpus-specific — a score of "12.4" doesn't tell you anything us
 a confidence range using an exponential curve, then blend it with query coverage (what
 [0, 1]
 fraction of the user's words appeared in the chunk). The result is a confidence number you can actually
-threshold against (we use 0.72 for auto-reply, 0.5 for "this is a novel question").
+threshold against. We use 0.5 as the cutoff: below it the question is treated as novel (a knowledge gap); at or above it we draft a reply. Every reply is human-reviewed before sending — there is no auto-send.
 How retrieval changes the reply
 When the system drafts a reply, it doesn't get the whole knowledge base — only the top 5 chunks,
 formatted with their priority and source clearly marked. The prompt explicitly tells the model: "if sources

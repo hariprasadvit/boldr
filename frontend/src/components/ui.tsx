@@ -254,8 +254,7 @@ const ROUTING_RULES: RoutingRule[] = [
   { id: "liability_pair", condition: "health_conscious asking materials_safety", route: "human_review", shownAs: "Liability pair → careful review" },
   { id: "low_intent", condition: "classification confidence < 0.55", route: "human_review", shownAs: "Low intent certainty → review" },
   { id: "gap", condition: "KB confidence < 0.50", route: "knowledge_gap", shownAs: "Novel → answer + teach KB" },
-  { id: "high", condition: "KB confidence ≥ 0.72", route: "human_review", shownAs: "High-confidence draft → quick approve" },
-  { id: "soft", condition: "KB confidence 0.50–0.72", route: "human_review", shownAs: "Draft → human review" },
+  { id: "review", condition: "KB confidence ≥ 0.50", route: "human_review", shownAs: "Draft → human review" },
 ];
 
 /** Maps a route_reason string to the rule that fired (best-effort substring match). */
@@ -266,11 +265,8 @@ export function matchFiredRule(routeReason: string, route: string): string | nul
   if (r.includes("liability pair")) return "liability_pair";
   if (r.includes("classification confidence")) return "low_intent";
   if (r.includes("< 0.5") || r.includes("novel")) return "gap";
-  if (r.includes("≥")) return "high";
-  if (r.includes("soft band")) return "soft";
   if (route === "knowledge_gap") return "gap";
-  if (route === "auto_reply") return "high";
-  return null;
+  return "review"; // any other human-review reason (incl. legacy auto_reply)
 }
 
 /** The routing framework as a legend; pass `firedId` to highlight the rule that fired. */

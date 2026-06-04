@@ -10,7 +10,6 @@ from __future__ import annotations
 from langchain_core.runnables import RunnableConfig
 from app.agent.state import TicketState
 
-HIGH_CONFIDENCE = 0.72
 GAP_THRESHOLD = 0.50
 MIN_CLASSIFICATION_CONFIDENCE = 0.55
 
@@ -46,19 +45,16 @@ def run(state: TicketState, config: RunnableConfig | None = None) -> TicketState
         return _route(state, "human_review", f"liability pair: {persona} asking {qtype}")
     if cls_conf < MIN_CLASSIFICATION_CONFIDENCE:
         return _route(state, "human_review", f"classification confidence {cls_conf:.2f} too low")
+    # Two bands only: a strong enough KB match gets a drafted reply for human
+    # review; otherwise it's a novel question (gap). Every reply is human-reviewed
+    # before sending, so there's no auto-send threshold to tune.
     if confidence < GAP_THRESHOLD:
         return _route(
             state, "knowledge_gap", f"KB confidence {confidence:.2f} < {GAP_THRESHOLD} — novel, needs an answer"
         )
-    # Policy: every reply is human-reviewed before sending. Confidence sets the
-    # review effort (high = quick approve), never an auto-send.
-    if confidence >= HIGH_CONFIDENCE:
-        return _route(
-            state,
-            "human_review",
-            f"KB confidence {confidence:.2f} ≥ {HIGH_CONFIDENCE} — high-confidence draft, quick review",
-        )
-    return _route(state, "human_review", f"KB confidence {confidence:.2f} — draft for human review")
+    return _route(
+        state, "human_review", f"KB confidence {confidence:.2f} ≥ {GAP_THRESHOLD} — draft for human review"
+    )
 
 
 def _route(state: TicketState, route: str, reason: str) -> TicketState:

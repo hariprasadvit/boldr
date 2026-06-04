@@ -182,9 +182,10 @@ The logic in [route.ts](../web/lib/route.ts) already implements this table. Rend
 | `question_type = order_status` | human_review | 🔴 Policy (SOP §5) → human |
 | `health_conscious::materials_safety` | human_review | 🔴 Liability pair → human |
 | classification conf < 0.55 | human_review | 🟠 Low intent certainty → human |
-| KB conf < 0.50 | knowledge_gap | 🟣 Novel → learning loop |
-| KB conf ≥ 0.72 | auto_reply | 🟢 High confidence → auto |
-| else (0.50–0.72) | human_review | 🟠 Draft for human |
+| KB conf < 0.50 | knowledge_gap | 🟣 Novel → answer + teach KB |
+| KB conf ≥ 0.50 | human_review | 🟠 Draft for human review |
+
+> **Policy update:** there is no auto-send path. Every reply is human-reviewed before sending; KB confidence only separates "novel (gap)" from "draft for review". (An earlier 0.72 "high-confidence → auto" band was removed when the policy moved to human-review-only.)
 
 On each ticket, show **the rule that fired** = `route_reason` (already stored).
 

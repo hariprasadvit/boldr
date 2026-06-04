@@ -192,8 +192,8 @@ function SelfImprovingPanel({
         <div>
           <h2 className="text-sm font-medium text-zinc-100">Self-improving feedback loop</h2>
           <p className="mt-1 max-w-3xl text-xs text-[var(--muted)]">
-            Highlight this in the demo: every new query either reuses the KB or creates a reviewed learning
-            artifact that can be published back into the KB and rolled up into campaign intelligence.
+            Every new query either reuses the knowledge base or creates a reviewed learning artifact that is
+            published back into the KB and rolled up into campaign intelligence.
           </p>
         </div>
         <Pill color="emerald">{gapCount} FAQ drafts queued</Pill>
