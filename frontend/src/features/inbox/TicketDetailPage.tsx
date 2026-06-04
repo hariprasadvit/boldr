@@ -113,34 +113,47 @@ function Citations({ items }: { items: string[] }) {
 function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
   const openItems: OpenItem[] = reply.open_items ?? [];
   const [body, setBody] = useState(reply.body);
-  const [answers, setAnswers] = useState(openItems.map(() => ({ answer: "", teach: true })));
+  const [answers, setAnswers] = useState(openItems.map(() => ({ answer: "", teach: true, skip: false })));
   const [rating, setRating] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ status: string; taught: string[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  function setAnswer(i: number, patch: Partial<{ answer: string; teach: boolean }>) {
+  function setAnswer(i: number, patch: Partial<{ answer: string; teach: boolean; skip: boolean }>) {
     setAnswers((a) => a.map((x, j) => (j === i ? { ...x, ...patch } : x)));
   }
 
+  // An item is "handled" once it's answered or explicitly skipped. You can't send
+  // until every open item is handled — no sending while inputs are still pending.
+  const pending = openItems.filter((_, i) => !answers[i].answer.trim() && !answers[i].skip).length;
+  const canSend = !busy && !!body.trim() && pending === 0;
+
   function insertAnswers() {
-    const filled = openItems
-      .map((oi, i) => (answers[i].answer.trim() ? `${oi.question}: ${answers[i].answer.trim()}` : null))
-      .filter(Boolean);
-    if (filled.length) setBody((b) => `${b}\n\n${filled.join("\n\n")}`);
+    const merged = mergeAnswers(body);
+    if (merged !== body) setBody(merged);
+  }
+
+  // Append any answered item whose text isn't already in the body (so a typed
+  // answer can't silently get dropped from the email). Skipped items are omitted.
+  function mergeAnswers(base: string): string {
+    const additions = openItems
+      .map((_, i) => (answers[i].answer.trim() && !answers[i].skip ? answers[i].answer.trim() : null))
+      .filter((a): a is string => !!a && !base.includes(a));
+    return additions.length ? `${base}\n\n${additions.join("\n\n")}` : base;
   }
 
   async function resolve() {
     setBusy(true);
     setError(null);
     try {
+      const finalBody = mergeAnswers(body); // safety net: answers always reach the customer
       const payload = {
-        final_body: body,
+        final_body: finalBody,
         answers: openItems
           .map((oi, i) => ({ question: oi.question, answer: answers[i].answer.trim(), teach: answers[i].teach }))
-          .filter((a) => a.answer),
+          .filter((a, i) => a.answer && !answers[i].skip),
         rating,
-        edited: body !== reply.body,
+        edited: finalBody !== reply.body,
       };
       const r = await api.resolveReply(reply.id, payload);
       setResult({ status: r.status, taught: r.taught });
@@ -176,41 +189,70 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
       {openItems.length > 0 && (
         <div className="rounded-lg border border-amber-800/40 bg-amber-950/10 p-5">
           <h3 className="mb-1 text-sm font-medium text-amber-200">
-            Needs your input · {openItems.length} open item{openItems.length === 1 ? "" : "s"}
+            Needs your input ·{" "}
+            {pending === 0
+              ? "all handled"
+              : `${pending} of ${openItems.length} still open`}
           </h3>
           <p className="mb-4 text-xs text-[var(--muted)]">
-            The bot answered what the KB covers. These parts it couldn&apos;t ground — fill them in. Anything
-            you mark <span className="text-emerald-300">Teach KB</span> is published so the next customer is
-            answered automatically.
+            The bot answered what the KB covers. These parts it couldn&apos;t ground — answer each (it&apos;s
+            added to the reply) or skip it. You can&apos;t send until every item is handled. Anything you mark{" "}
+            <span className="text-emerald-300">Teach KB</span> is published so the next customer is answered
+            automatically.
           </p>
           <div className="space-y-4">
-            {openItems.map((oi, i) => (
-              <div key={i} className="rounded border border-[var(--border)] bg-zinc-950/40 p-3">
-                <div className="mb-1 text-sm text-zinc-200">{oi.question}</div>
-                {oi.reason && <div className="mb-2 text-[11px] text-[var(--muted)]">why open: {oi.reason}</div>}
-                <textarea
-                  value={answers[i].answer}
-                  onChange={(e) => setAnswer(i, { answer: e.target.value })}
-                  placeholder="Type the answer…"
-                  rows={2}
-                  className="w-full resize-none rounded border border-[var(--border)] bg-zinc-950 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-amber-500 focus:outline-none"
-                />
-                <label className="mt-2 flex items-center gap-2 text-[11px] text-zinc-400">
-                  <input
-                    type="checkbox"
-                    checked={answers[i].teach}
-                    onChange={(e) => setAnswer(i, { teach: e.target.checked })}
-                  />
-                  Teach this answer to the KB (reused automatically next time)
-                </label>
-              </div>
-            ))}
+            {openItems.map((oi, i) => {
+              const a = answers[i];
+              return (
+                <div
+                  key={i}
+                  className={`rounded border p-3 ${
+                    a.skip
+                      ? "border-[var(--border)] bg-zinc-950/20 opacity-60"
+                      : a.answer.trim()
+                        ? "border-emerald-800/40 bg-zinc-950/40"
+                        : "border-amber-800/40 bg-zinc-950/40"
+                  }`}
+                >
+                  <div className="mb-1 flex items-start justify-between gap-3">
+                    <div className="text-sm text-zinc-200">{oi.question}</div>
+                    <label className="flex shrink-0 items-center gap-1 text-[10px] text-zinc-500">
+                      <input
+                        type="checkbox"
+                        checked={a.skip}
+                        onChange={(e) => setAnswer(i, { skip: e.target.checked })}
+                      />
+                      skip
+                    </label>
+                  </div>
+                  {oi.reason && <div className="mb-2 text-[11px] text-[var(--muted)]">why open: {oi.reason}</div>}
+                  {a.skip ? (
+                    <div className="text-[11px] text-zinc-500">Skipped — won&apos;t be included or taught.</div>
+                  ) : (
+                    <>
+                      <textarea
+                        value={a.answer}
+                        onChange={(e) => setAnswer(i, { answer: e.target.value })}
+                        placeholder="Type the answer… (added to the reply on send)"
+                        rows={2}
+                        className="w-full resize-none rounded border border-[var(--border)] bg-zinc-950 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-amber-500 focus:outline-none"
+                      />
+                      <label className="mt-2 flex items-center gap-2 text-[11px] text-zinc-400">
+                        <input
+                          type="checkbox"
+                          checked={a.teach}
+                          onChange={(e) => setAnswer(i, { teach: e.target.checked })}
+                        />
+                        Teach this answer to the KB (reused automatically next time)
+                      </label>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <button
-            onClick={insertAnswers}
-            className="mt-3 text-[11px] text-amber-300 hover:text-amber-200"
-          >
-            + insert answers into the reply below
+          <button onClick={insertAnswers} className="mt-3 text-[11px] text-amber-300 hover:text-amber-200">
+            + preview answers in the reply below
           </button>
         </div>
       )}
@@ -241,13 +283,21 @@ function ReviewWorkspace({ reply }: { reply: ReplyOut }) {
               👎 needs work
             </button>
           </div>
-          <button
-            onClick={resolve}
-            disabled={busy || !body.trim()}
-            className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-zinc-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
-          >
-            {busy ? "Sending…" : "Resolve & send"}
-          </button>
+          <div className="flex items-center gap-3">
+            {pending > 0 && (
+              <span className="text-[11px] text-amber-300">
+                Answer or skip {pending} open item{pending === 1 ? "" : "s"} to send
+              </span>
+            )}
+            <button
+              onClick={resolve}
+              disabled={!canSend}
+              title={pending > 0 ? "Handle all open items first" : "Send the reply and close the ticket"}
+              className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-zinc-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {busy ? "Sending…" : "Resolve & send"}
+            </button>
+          </div>
         </div>
         {error && <div className="mt-2 text-[11px] text-rose-300">Failed: {error}</div>}
       </div>
