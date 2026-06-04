@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { api } from "@/api/client";
-import { Card, ImpactStat, Pill, SectionHeader, usd } from "@/components/ui";
+import { Card, ImpactStat, Pill, SectionHeader } from "@/components/ui";
 import { useAsync } from "@/hooks/useAsync";
 import type { GapOut } from "@/api/types";
 
@@ -75,30 +75,8 @@ export function HomePage() {
             />
           </div>
 
-          {/* Cost / ROI + automation mix — the cost-efficiency story. */}
+          {/* Governance stat — every reply is human-approved (no financial ROI claims). */}
           <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-            <ImpactStat
-              label="Model cost"
-              value={usd(impact?.model_cost_usd ?? 0)}
-              hint={`${usd(impact?.avg_cost_per_ticket_usd ?? 0)} / ticket`}
-              basis="derived"
-              formula={`Σ tokens × price (in $${impact?.assumptions.price_per_m_input_usd ?? 3}/M, out $${impact?.assumptions.price_per_m_output_usd ?? 15}/M). Batch estimated; live runs report exact usage.`}
-            />
-            <ImpactStat
-              label="Human cost saved"
-              value={usd(impact?.human_cost_saved_usd ?? 0)}
-              hint={`@ $${impact?.assumptions.loaded_hourly_rate_usd ?? 18}/hr loaded`}
-              basis="assumption"
-              formula={`${(impact?.hours_saved ?? 0).toFixed(1)} hrs × $${impact?.assumptions.loaded_hourly_rate_usd ?? 18}/hr loaded agent cost`}
-            />
-            <ImpactStat
-              label="ROI"
-              value={`${(impact?.roi_multiple ?? 0).toFixed(0)}×`}
-              hint="human cost saved ÷ model cost"
-              basis="derived"
-              accent
-              formula="Human cost saved ÷ model cost — every $1 of model spend offsets this much agent time"
-            />
             <ImpactStat
               label="Human-reviewed"
               value="100%"
